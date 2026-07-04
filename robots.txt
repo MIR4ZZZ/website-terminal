@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mir4zzz.github.io/website-terminal/sitemap.xml

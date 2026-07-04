@@ -9,7 +9,7 @@
 
 Add a safe, fake terminal to any normal website. Visitors type commands like `about`, `features`, or `contact`; your site prints the answers you define.
 
-[Live builder](https://mir4zzz.github.io/website-terminal/) · [Minimal example](https://mir4zzz.github.io/website-terminal/examples/minimal.html) · [MIT license](LICENSE)
+[Live builder](https://mir4zzz.github.io/website-terminal/) · [Minimal example](https://mir4zzz.github.io/website-terminal/examples/minimal.html) · [Launch notes](LAUNCH.md) · [MIT license](LICENSE)
 
 If this saves you time, star the repo so other people can find it.
 
