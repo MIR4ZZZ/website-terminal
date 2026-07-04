@@ -1,10 +1,34 @@
 # Website Terminal
 
-Add a fake terminal to a normal website. It runs only in the browser, prints text from an allowlist of commands, and never executes real shell commands.
+[![Checks](https://github.com/MIR4ZZZ/website-terminal/actions/workflows/checks.yml/badge.svg)](https://github.com/MIR4ZZZ/website-terminal/actions/workflows/checks.yml)
+![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![No dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
+![Vanilla JS](https://img.shields.io/badge/vanilla-JS-f7df1e.svg)
+
+![Website Terminal builder](assets/demo.png)
+
+Add a safe, fake terminal to any normal website. Visitors type commands like `about`, `features`, or `contact`; your site prints the answers you define.
+
+[Live builder](https://mir4zzz.github.io/website-terminal/) · [MIT license](LICENSE)
+
+If this saves you time, star the repo so other people can find it.
+
+## Why Use It
+
+- Vanilla HTML, CSS, and JavaScript
+- No build step
+- No dependencies
+- Browser-only: it never runs real shell commands
+- Built-in `help` and `clear`
+- Builder UI that generates the embed code for you
+
+## Fastest Start
+
+Open the [live builder](https://mir4zzz.github.io/website-terminal/), add your commands and answers, then copy the generated embed code.
 
 ## Copy Into Any Site
 
-Copy these two files:
+Copy these two files beside your page:
 
 - `terminal.css`
 - `terminal.js`
@@ -23,7 +47,7 @@ Add a mount point:
     welcome: ['Website terminal loaded.', 'Type "help" for commands.'],
     commands: {
       about: {
-        description: 'who this site is for',
+        description: 'what this site is',
         text: 'Replace this with your about text.',
       },
       contact: {
@@ -35,20 +59,16 @@ Add a mount point:
 </script>
 ```
 
-Open `index.html` to use the builder. It lets you add commands and answers, preview the terminal, and copy the generated embed code.
-
 ## Commands
 
-`help` and `clear` are built in.
-
-Add your own commands in the `commands` object:
+`help` and `clear` are built in. Add your own commands in the `commands` object:
 
 ```js
 WebsiteTerminal.mount('#site-terminal', {
   commands: {
-    projects: {
-      description: 'current work',
-      text: '1. Website redesign\n2. Product docs',
+    docs: {
+      description: 'read the docs',
+      text: 'https://example.com/docs',
     },
     time: {
       description: 'browser time',
@@ -60,21 +80,31 @@ WebsiteTerminal.mount('#site-terminal', {
 
 Command output is rendered with `textContent`, not `innerHTML`, so visitor input cannot inject HTML.
 
-## Builder UI
+## Customize
 
-The demo page includes a small web UI for people who do not want to edit JavaScript by hand:
+Change the terminal colors with CSS variables:
 
-- change the terminal title
-- change welcome lines
-- add command names, help descriptions, and answers
-- remove commands
-- copy the final embed code
+```css
+.website-terminal {
+  --wt-bg: #05080d;
+  --wt-text: #f5f7fa;
+  --wt-muted: #a8b0bd;
+  --wt-accent: #7dd3fc;
+  --wt-prompt: #f6c177;
+}
+```
 
-The reusable widget is still only `terminal.css` and `terminal.js`. `builder.js` is just for the demo page.
+## Development
 
-## Deploy
+```bash
+npm test
+```
 
-This repo is static. GitHub Pages can serve it directly from the repository root.
+The tests check syntax, command behavior, and the builder embed generator. There is no package install step.
+
+## Safety Model
+
+This is a fake terminal. It only matches commands from your allowlist and prints text in the browser. Do not wire raw visitor input to a real shell.
 
 ## License
 

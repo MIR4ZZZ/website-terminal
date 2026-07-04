@@ -38,7 +38,8 @@
       }
 
       h1,
-      p {
+      p,
+      h2 {
         margin: 0;
       }
 
@@ -54,6 +55,11 @@
         line-height: 1.65;
       }
 
+      h2 {
+        font-size: 1rem;
+        letter-spacing: 0;
+      }
+
       .builder-grid {
         display: grid;
         grid-template-columns: minmax(320px, 0.92fr) minmax(340px, 1.08fr);
@@ -66,6 +72,21 @@
         border-radius: 8px;
         padding: 18px;
         background: rgba(18, 22, 28, 0.82);
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .panel-kicker {
+        color: #7dd3fc;
+        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
       }
 
       .builder-form,
@@ -190,10 +211,19 @@
 
       <section class="builder-grid" aria-label="Terminal builder">
         <div class="panel">
+          <div class="panel-header">
+            <h2>Live preview</h2>
+            <p class="panel-kicker">browser only</p>
+          </div>
           <div id="site-terminal"></div>
         </div>
 
         <aside class="panel">
+          <div class="panel-header">
+            <h2>Command builder</h2>
+            <p class="panel-kicker">copy embed</p>
+          </div>
+
           <form class="builder-form" id="builderForm">
             <div class="field">
               <label for="titleInput">Terminal title</label>
@@ -212,11 +242,11 @@
 
             <div class="field">
               <label for="descriptionInput">Help description</label>
-              <input id="descriptionInput" type="text" placeholder="what this command does" />
+              <input id="descriptionInput" type="text" placeholder="short help text" />
             </div>
 
             <div class="field">
-              <label for="answerInput">Answer</label>
+              <label for="answerInput">Command answer</label>
               <textarea id="answerInput" placeholder="The text visitors see when they run the command."></textarea>
             </div>
 

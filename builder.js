@@ -11,9 +11,9 @@
         description: 'what this is',
         text: 'A browser-only terminal element for a normal website.',
       },
-      projects: {
-        description: 'example output',
-        text: '1. Add your own commands\n2. Preview visitor responses\n3. Copy the embed code',
+      features: {
+        description: 'what it can do',
+        text: '1. Add custom commands\n2. Preview visitor responses\n3. Copy a safe embed snippet',
       },
       contact: {
         description: 'contact path',

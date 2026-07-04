@@ -1,0 +1,34 @@
+{
+  "name": "website-terminal",
+  "version": "1.0.0",
+  "description": "Copyable fake terminal widget for normal websites.",
+  "license": "MIT",
+  "main": "terminal.js",
+  "style": "terminal.css",
+  "homepage": "https://mir4zzz.github.io/website-terminal/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MIR4ZZZ/website-terminal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MIR4ZZZ/website-terminal/issues"
+  },
+  "keywords": [
+    "terminal",
+    "website",
+    "widget",
+    "vanilla-js",
+    "embed",
+    "portfolio",
+    "static-site"
+  ],
+  "scripts": {
+    "test": "node --check terminal.js && node --check builder.js && node terminal.test.js && node builder.test.js"
+  },
+  "files": [
+    "terminal.js",
+    "terminal.css",
+    "README.md",
+    "LICENSE"
+  ]
+}
