@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Terminal</title>
+    <link rel="stylesheet" href="./terminal.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #11100e;
+        color: #f4f1ea;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          linear-gradient(135deg, rgba(204, 185, 142, 0.12), transparent 34%),
+          radial-gradient(circle at 78% 24%, rgba(88, 156, 144, 0.18), transparent 30%),
+          #11100e;
+      }
+
+      main {
+        width: min(920px, 100%);
+        display: grid;
+        gap: 18px;
+      }
+
+      h1,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 6vw, 4.4rem);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      p {
+        max-width: 680px;
+        color: #c9c0b1;
+        line-height: 1.65;
+      }
+
+      .demo-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      .copy-panel {
+        border: 1px solid rgba(244, 241, 234, 0.16);
+        border-radius: 8px;
+        padding: 18px;
+        background: rgba(244, 241, 234, 0.06);
+      }
+
+      code {
+        display: block;
+        margin-top: 12px;
+        color: #b9dfca;
+        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+        font-size: 0.84rem;
+        line-height: 1.7;
+        white-space: pre-wrap;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          place-items: start;
+        }
+
+        .demo-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div>
+        <h1>Website Terminal</h1>
+        <p>A copyable fake terminal for portfolios, docs, landing pages, and personal sites.</p>
+      </div>
+
+      <section class="demo-grid" aria-label="Terminal demo">
+        <div id="site-terminal"></div>
+
+        <aside class="copy-panel">
+          <p>Copy two files and mount it where you want the terminal to appear.</p>
+          <code>&lt;link rel="stylesheet" href="./terminal.css" /&gt;
+&lt;div id="site-terminal"&gt;&lt;/div&gt;
+&lt;script src="./terminal.js"&gt;&lt;/script&gt;</code>
+        </aside>
+      </section>
+    </main>
+
+    <script src="./terminal.js"></script>
+    <script>
+      WebsiteTerminal.mount('#site-terminal', {
+        title: 'guest@mirasmohamed.cc: ~',
+        welcome: ['Portfolio workbench loaded.', 'Type "help" for available commands.'],
+        commands: {
+          about: {
+            description: 'what this is',
+            text: 'A browser-only terminal interface for a normal website.',
+          },
+          projects: {
+            description: 'example output',
+            text: '1. Portfolio terminal - copyable widget\n2. Static demo - GitHub Pages ready',
+          },
+          contact: {
+            description: 'contact path',
+            text: 'Replace this with your contact form, email, or social link.',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
