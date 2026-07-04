@@ -86,6 +86,35 @@
         align-items: start;
       }
 
+      .hero-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: end;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .link-button {
+        border: 1px solid rgba(245, 247, 250, 0.16);
+        border-radius: 6px;
+        padding: 10px 12px;
+        color: #f5f7fa;
+        font-size: 0.9rem;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .link-button.primary {
+        background: #7dd3fc;
+        color: #071016;
+      }
+
       .panel {
         border: 1px solid rgba(245, 247, 250, 0.14);
         border-radius: 8px;
@@ -216,6 +245,14 @@
       }
 
       @media (max-width: 760px) {
+        .hero-row {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-actions {
+          justify-content: flex-start;
+        }
+
         .builder-grid {
           grid-template-columns: 1fr;
         }
@@ -224,9 +261,17 @@
   </head>
   <body>
     <main>
-      <div>
-        <h1>Website Terminal</h1>
-        <p>Build a browser-only terminal, add commands and answers, preview it, then copy the embed code.</p>
+      <div class="hero-row">
+        <div>
+          <h1>Website Terminal</h1>
+          <p>Build a browser-only terminal, add commands and answers, preview it, then copy the embed code.</p>
+        </div>
+        <nav class="hero-actions" aria-label="Project links">
+          <a class="link-button primary" href="https://github.com/MIR4ZZZ/website-terminal">Star on GitHub</a>
+          <a class="link-button" href="https://github.com/MIR4ZZZ/website-terminal">Source</a>
+          <a class="link-button" href="./examples/cdn.html">CDN example</a>
+          <a class="link-button" href="./examples/minimal.html">Minimal example</a>
+        </nav>
       </div>
 
       <section class="builder-grid" aria-label="Terminal builder">
