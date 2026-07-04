@@ -48,7 +48,7 @@ WebsiteTerminal.mount('#site-terminal', {
   commands: {
     projects: {
       description: 'current work',
-      text: '1. Portfolio\n2. Local business software',
+      text: '1. Website redesign\n2. Product docs',
     },
     time: {
       description: 'browser time',

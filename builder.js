@@ -4,16 +4,16 @@
   root.WebsiteTerminalBuilder = api;
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   const defaultConfig = {
-    title: 'guest@mirasmohamed.cc: ~',
-    welcome: ['Portfolio workbench loaded.', 'Type "help" for available commands.'],
+    title: 'guest@your-site: ~',
+    welcome: ['Website terminal ready.', 'Type "help" for available commands.'],
     commands: {
       about: {
         description: 'what this is',
-        text: 'A browser-only terminal interface for a normal website.',
+        text: 'A browser-only terminal element for a normal website.',
       },
       projects: {
         description: 'example output',
-        text: '1. Portfolio terminal - copyable widget\n2. Static demo - GitHub Pages ready',
+        text: '1. Add your own commands\n2. Preview visitor responses\n3. Copy the embed code',
       },
       contact: {
         description: 'contact path',

@@ -1,11 +1,11 @@
 .website-terminal {
-  --wt-bg: rgba(2, 5, 10, 0.92);
+  --wt-bg: rgba(5, 8, 13, 0.94);
   --wt-border: rgba(255, 255, 255, 0.12);
   --wt-panel: rgba(255, 255, 255, 0.05);
-  --wt-text: #e8e2d7;
-  --wt-muted: #b9c1c9;
-  --wt-accent: #b9dfca;
-  --wt-prompt: #d9c58c;
+  --wt-text: #f5f7fa;
+  --wt-muted: #a8b0bd;
+  --wt-accent: #7dd3fc;
+  --wt-prompt: #f6c177;
   color: var(--wt-text);
   font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
   font-size: 0.9rem;
@@ -49,15 +49,15 @@
 }
 
 .wt-dot-red {
-  background: #a56c64;
+  background: #ef6f6c;
 }
 
 .wt-dot-yellow {
-  background: #b8a668;
+  background: #f6c177;
 }
 
 .wt-dot-green {
-  background: #6fa889;
+  background: #5dd39e;
 }
 
 .wt-title {
@@ -112,7 +112,7 @@
 
 .wt-input:focus-visible {
   border-radius: 4px;
-  box-shadow: 0 0 0 3px rgba(185, 223, 202, 0.18);
+  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.2);
 }
 
 .wt-input::placeholder {
