@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Terminal CDN Example</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, sans-serif;
+        background: #101214;
+        color: #f5f7fa;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      main {
+        width: min(720px, 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="site-terminal"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.js"></script>
+    <script>
+      WebsiteTerminal.mount('#site-terminal', {
+        title: 'guest@cdn-example: ~',
+        welcome: ['CDN terminal loaded.', 'Type "help" for commands.'],
+        commands: {
+          about: {
+            description: 'what this is',
+            text: 'This page loads Website Terminal from jsDelivr.',
+          },
+          source: {
+            description: 'repository',
+            text: 'https://github.com/MIR4ZZZ/website-terminal',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
