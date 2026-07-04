@@ -39,7 +39,7 @@
           .join('\n')}`,
       };
     }
-    if (Object.hasOwn(commands, command)) {
+    if (Object.prototype.hasOwnProperty.call(commands, command)) {
       return { type: 'output', text: commandText(commands[command], rawCommand) };
     }
     return { type: 'output', text: `Command not found: "${rawCommand}". Type "help".` };

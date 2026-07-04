@@ -12,5 +12,6 @@ assert.match(runCommand('help', commands).text, /about - who this is/);
 assert.equal(runCommand('about', commands).text, 'Browser-only terminal.');
 assert.equal(runCommand('time', commands).text, 'now');
 assert.match(runCommand('missing', commands).text, /Command not found/);
+assert.match(runCommand('toString', commands).text, /Command not found/);
 
 console.log('terminal checks passed');

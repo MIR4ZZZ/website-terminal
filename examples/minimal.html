@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Terminal Minimal Example</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../terminal.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, sans-serif;
+        background: #101214;
+        color: #f5f7fa;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      main {
+        width: min(720px, 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="site-terminal"></div>
+    </main>
+
+    <script src="../terminal.js"></script>
+    <script>
+      WebsiteTerminal.mount('#site-terminal', {
+        title: 'guest@example: ~',
+        welcome: ['Minimal terminal loaded.', 'Type "help" for commands.'],
+        commands: {
+          about: {
+            description: 'what this is',
+            text: 'A copy-paste browser terminal for any website.',
+          },
+          contact: {
+            description: 'contact link',
+            text: 'https://example.com/contact',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
