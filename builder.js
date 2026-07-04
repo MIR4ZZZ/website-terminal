@@ -21,6 +21,14 @@
       },
     },
   };
+  const localAssets = {
+    css: './terminal.css',
+    js: './terminal.js',
+  };
+  const cdnAssets = {
+    css: 'https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.css',
+    js: 'https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.js',
+  };
 
   function cloneConfig(config) {
     return JSON.parse(JSON.stringify(config));
@@ -30,11 +38,11 @@
     return value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9_-]/g, '');
   }
 
-  function embedCode(config) {
+  function embedCode(config, assets = localAssets) {
     const json = JSON.stringify(config, null, 2).replace(/<\/script/gi, '<\\/script');
-    return `<link rel="stylesheet" href="./terminal.css" />
+    return `<link rel="stylesheet" href="${assets.css}" />
 <div id="site-terminal"></div>
-<script src="./terminal.js"></script>
+<script src="${assets.js}"></script>
 <script>
   WebsiteTerminal.mount('#site-terminal', ${json});
 </script>`;
@@ -55,6 +63,7 @@
     const commandInput = document.querySelector('#commandInput');
     const descriptionInput = document.querySelector('#descriptionInput');
     const answerInput = document.querySelector('#answerInput');
+    const assetSourceInput = document.querySelector('#assetSourceInput');
     const commandList = document.querySelector('#commandList');
     const embedOutput = document.querySelector('#embedCode');
     const statusText = document.querySelector('#statusText');
@@ -62,6 +71,10 @@
     const resetButton = document.querySelector('#resetButton');
     const copyButton = document.querySelector('#copyButton');
     let config = cloneConfig(defaultConfig);
+
+    function selectedAssets() {
+      return assetSourceInput.value === 'cdn' ? cdnAssets : localAssets;
+    }
 
     function syncBaseConfig() {
       config.title = titleInput.value.trim() || defaultConfig.title;
@@ -76,7 +89,7 @@
 
     function refresh() {
       root.WebsiteTerminal.mount('#site-terminal', config);
-      embedOutput.value = embedCode(config);
+      embedOutput.value = embedCode(config, selectedAssets());
       commandList.replaceChildren();
 
       Object.entries(config.commands).forEach(([name, command]) => {
@@ -133,6 +146,8 @@
       });
     });
 
+    assetSourceInput.addEventListener('change', refresh);
+
     resetButton.addEventListener('click', () => {
       config = cloneConfig(defaultConfig);
       fillBaseFields();
@@ -142,7 +157,7 @@
 
     copyButton.addEventListener('click', async () => {
       syncBaseConfig();
-      embedOutput.value = embedCode(config);
+      embedOutput.value = embedCode(config, selectedAssets());
       embedOutput.select();
       try {
         if (navigator.clipboard) await navigator.clipboard.writeText(embedOutput.value);
@@ -162,5 +177,5 @@
     else init();
   }
 
-  return { defaultConfig, embedCode, toCommandName };
+  return { cdnAssets, defaultConfig, embedCode, localAssets, toCommandName };
 });

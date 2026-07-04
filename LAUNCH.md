@@ -10,7 +10,7 @@ Website Terminal is a dependency-free fake terminal widget and builder for norma
 
 I made Website Terminal: a safe browser-only terminal widget for any static site.
 
-You add commands and answers, preview the terminal, then copy the embed code. No dependencies, no build step, no real shell execution.
+You add commands and answers, preview the terminal, then copy CDN embed code that works anywhere. No dependencies, no build step, no real shell execution.
 
 Demo: https://mir4zzz.github.io/website-terminal/
 Repo: https://github.com/MIR4ZZZ/website-terminal

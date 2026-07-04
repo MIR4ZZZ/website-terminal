@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- Added CDN/local asset mode to the builder embed output.
+- Added jsDelivr copy-paste instructions.
+
 ## 1.0.0
 
 - Added the copy-paste terminal widget.

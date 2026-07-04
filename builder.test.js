@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const { embedCode, toCommandName } = require('./builder.js');
+const { cdnAssets, embedCode, toCommandName } = require('./builder.js');
 
 assert.equal(toCommandName(' My Projects! '), 'my-projects');
 assert.equal(toCommandName('contact_me'), 'contact_me');
@@ -20,6 +20,7 @@ const code = embedCode({
 assert.match(code, /WebsiteTerminal\.mount/);
 assert.match(code, /<\\\/script>/);
 assert.doesNotMatch(code, /text: '<\/script>/);
+assert.match(embedCode({ title: 'x', welcome: [], commands: {} }, cdnAssets), /cdn\.jsdelivr\.net/);
 
 function node() {
   return {

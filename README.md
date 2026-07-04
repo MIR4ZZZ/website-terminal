@@ -28,9 +28,25 @@ Open the [live builder](https://mir4zzz.github.io/website-terminal/), add your c
 
 Want the smallest possible page? Open `examples/minimal.html`.
 
+The builder can generate CDN links that work anywhere, or local paths when you want to copy `terminal.css` and `terminal.js` into your project.
+
 ## Copy Into Any Site
 
-Copy these two files beside your page:
+### CDN
+
+Paste this anywhere:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.css" />
+
+<div id="site-terminal"></div>
+
+<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.js"></script>
+```
+
+### Local Files
+
+Or copy these two files beside your page:
 
 - `terminal.css`
 - `terminal.js`

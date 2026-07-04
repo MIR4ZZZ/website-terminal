@@ -127,7 +127,8 @@
       }
 
       input,
-      textarea {
+      textarea,
+      select {
         width: 100%;
         border: 1px solid rgba(245, 247, 250, 0.14);
         border-radius: 6px;
@@ -267,6 +268,14 @@
             <div class="field">
               <label for="answerInput">Command answer</label>
               <textarea id="answerInput" placeholder="The text visitors see when they run the command."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="assetSourceInput">Asset source</label>
+              <select id="assetSourceInput">
+                <option value="cdn" selected>CDN links - paste anywhere</option>
+                <option value="local">Local files - copy terminal.css and terminal.js</option>
+              </select>
             </div>
 
             <div class="button-row">
