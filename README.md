@@ -9,7 +9,7 @@
 
 Add a safe, fake terminal to any normal website. Visitors type commands like `about`, `features`, or `contact`; your site prints the answers you define.
 
-[Live builder](https://mir4zzz.github.io/website-terminal/) · [CDN example](https://mir4zzz.github.io/website-terminal/examples/cdn.html) · [Minimal example](https://mir4zzz.github.io/website-terminal/examples/minimal.html) · [Launch notes](LAUNCH.md) · [MIT license](LICENSE)
+[Live builder](https://mir4zzz.github.io/website-terminal/) · [CDN example](https://mir4zzz.github.io/website-terminal/examples/cdn.html) · [Minimal example](https://mir4zzz.github.io/website-terminal/examples/minimal.html) · [Recipes](RECIPES.md) · [Launch notes](LAUNCH.md) · [MIT license](LICENSE)
 
 If this saves you time, star the repo so other people can find it.
 
@@ -29,6 +29,8 @@ Open the [live builder](https://mir4zzz.github.io/website-terminal/), add your c
 Want the smallest possible page? Open `examples/minimal.html`. Want a no-download embed? Open `examples/cdn.html`.
 
 The builder can generate CDN links that work anywhere, or local paths when you want to copy `terminal.css` and `terminal.js` into your project.
+
+Using Astro, Vite, React, Next.js, WordPress, Webflow, or a strict CSP? See [RECIPES.md](RECIPES.md).
 
 ## Copy Into Any Site
 
