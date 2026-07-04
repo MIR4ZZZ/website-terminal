@@ -21,8 +21,6 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
         padding: 24px;
         background:
           linear-gradient(135deg, rgba(204, 185, 142, 0.12), transparent 34%),
@@ -31,7 +29,8 @@
       }
 
       main {
-        width: min(920px, 100%);
+        width: min(1180px, 100%);
+        margin: 0 auto;
         display: grid;
         gap: 18px;
       }
@@ -53,18 +52,114 @@
         line-height: 1.65;
       }
 
-      .demo-grid {
+      .builder-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 280px;
+        grid-template-columns: minmax(320px, 0.92fr) minmax(340px, 1.08fr);
         gap: 18px;
-        align-items: stretch;
+        align-items: start;
       }
 
-      .copy-panel {
+      .panel {
         border: 1px solid rgba(244, 241, 234, 0.16);
         border-radius: 8px;
         padding: 18px;
         background: rgba(244, 241, 234, 0.06);
+      }
+
+      .builder-form,
+      .field,
+      .command-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .field {
+        gap: 6px;
+      }
+
+      label,
+      .small-title {
+        color: #f4f1ea;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid rgba(244, 241, 234, 0.16);
+        border-radius: 6px;
+        padding: 10px 12px;
+        background: rgba(3, 6, 12, 0.62);
+        color: #f4f1ea;
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 88px;
+        resize: vertical;
+        line-height: 1.5;
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        border: 1px solid rgba(244, 241, 234, 0.18);
+        border-radius: 6px;
+        padding: 10px 13px;
+        background: #b9dfca;
+        color: #11100e;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 800;
+      }
+
+      button.secondary {
+        background: transparent;
+        color: #f4f1ea;
+      }
+
+      .command-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .command-item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid rgba(244, 241, 234, 0.14);
+        border-radius: 6px;
+        padding: 10px;
+        background: rgba(3, 6, 12, 0.38);
+      }
+
+      .command-name {
+        color: #b9dfca;
+        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+        font-weight: 800;
+      }
+
+      .command-description,
+      .status {
+        color: #c9c0b1;
+        font-size: 0.88rem;
+      }
+
+      .remove-button {
+        padding: 8px 10px;
+      }
+
+      .embed-output {
+        min-height: 180px;
+        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+        font-size: 0.82rem;
       }
 
       code {
@@ -78,11 +173,7 @@
       }
 
       @media (max-width: 760px) {
-        body {
-          place-items: start;
-        }
-
-        .demo-grid {
+        .builder-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -92,41 +183,63 @@
     <main>
       <div>
         <h1>Website Terminal</h1>
-        <p>A copyable fake terminal for portfolios, docs, landing pages, and personal sites.</p>
+        <p>Build a browser-only terminal, add commands and answers, preview it, then copy the embed code.</p>
       </div>
 
-      <section class="demo-grid" aria-label="Terminal demo">
-        <div id="site-terminal"></div>
+      <section class="builder-grid" aria-label="Terminal builder">
+        <div class="panel">
+          <div id="site-terminal"></div>
+        </div>
 
-        <aside class="copy-panel">
-          <p>Copy two files and mount it where you want the terminal to appear.</p>
-          <code>&lt;link rel="stylesheet" href="./terminal.css" /&gt;
-&lt;div id="site-terminal"&gt;&lt;/div&gt;
-&lt;script src="./terminal.js"&gt;&lt;/script&gt;</code>
+        <aside class="panel">
+          <form class="builder-form" id="builderForm">
+            <div class="field">
+              <label for="titleInput">Terminal title</label>
+              <input id="titleInput" type="text" />
+            </div>
+
+            <div class="field">
+              <label for="welcomeInput">Welcome lines</label>
+              <textarea id="welcomeInput"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="commandInput">Command</label>
+              <input id="commandInput" type="text" placeholder="about" />
+            </div>
+
+            <div class="field">
+              <label for="descriptionInput">Help description</label>
+              <input id="descriptionInput" type="text" placeholder="what this command does" />
+            </div>
+
+            <div class="field">
+              <label for="answerInput">Answer</label>
+              <textarea id="answerInput" placeholder="The text visitors see when they run the command."></textarea>
+            </div>
+
+            <div class="button-row">
+              <button type="submit">Save command</button>
+              <button class="secondary" id="resetButton" type="button">Reset</button>
+              <button class="secondary" id="copyButton" type="button">Copy embed</button>
+            </div>
+            <p class="status" id="statusText" aria-live="polite"></p>
+          </form>
+
+          <div class="field">
+            <p class="small-title">Commands</p>
+            <ul class="command-list" id="commandList"></ul>
+          </div>
+
+          <div class="field">
+            <label for="embedCode">Embed code</label>
+            <textarea class="embed-output" id="embedCode" readonly></textarea>
+          </div>
         </aside>
       </section>
     </main>
 
     <script src="./terminal.js"></script>
-    <script>
-      WebsiteTerminal.mount('#site-terminal', {
-        title: 'guest@mirasmohamed.cc: ~',
-        welcome: ['Portfolio workbench loaded.', 'Type "help" for available commands.'],
-        commands: {
-          about: {
-            description: 'what this is',
-            text: 'A browser-only terminal interface for a normal website.',
-          },
-          projects: {
-            description: 'example output',
-            text: '1. Portfolio terminal - copyable widget\n2. Static demo - GitHub Pages ready',
-          },
-          contact: {
-            description: 'contact path',
-            text: 'Replace this with your contact form, email, or social link.',
-          },
-        },
-      });
-    </script>
+    <script src="./builder.js"></script>
   </body>
 </html>

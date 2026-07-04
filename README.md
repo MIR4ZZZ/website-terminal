@@ -35,7 +35,7 @@ Add a mount point:
 </script>
 ```
 
-Open `index.html` to see the demo.
+Open `index.html` to use the builder. It lets you add commands and answers, preview the terminal, and copy the generated embed code.
 
 ## Commands
 
@@ -59,6 +59,18 @@ WebsiteTerminal.mount('#site-terminal', {
 ```
 
 Command output is rendered with `textContent`, not `innerHTML`, so visitor input cannot inject HTML.
+
+## Builder UI
+
+The demo page includes a small web UI for people who do not want to edit JavaScript by hand:
+
+- change the terminal title
+- change welcome lines
+- add command names, help descriptions, and answers
+- remove commands
+- copy the final embed code
+
+The reusable widget is still only `terminal.css` and `terminal.js`. `builder.js` is just for the demo page.
 
 ## Deploy
 
