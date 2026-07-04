@@ -1,8 +1,8 @@
 (function (root, factory) {
-  const api = factory();
+  const api = factory(root);
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.WebsiteTerminalBuilder = api;
-})(typeof window !== 'undefined' ? window : globalThis, function () {
+})(typeof window !== 'undefined' ? window : globalThis, function (root) {
   const defaultConfig = {
     title: 'guest@your-site: ~',
     welcome: ['Website terminal ready.', 'Type "help" for available commands.'],
