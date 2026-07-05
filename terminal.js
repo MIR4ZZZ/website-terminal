@@ -124,6 +124,7 @@
     input.setAttribute('aria-label', 'Terminal command');
     line.append(el('span', 'wt-prompt', settings.prompt), input);
     form.append(line);
+    windowNode.addEventListener('click', () => input.focus());
 
     input.addEventListener('keydown', (event) => {
       if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;

@@ -47,10 +47,17 @@ function fakeNode() {
     children: [],
     classList: { add() {} },
     dataset: {},
+    focused: 0,
+    listeners: {},
     append(...nodes) {
       this.children.push(...nodes);
     },
-    addEventListener() {},
+    addEventListener(type, listener) {
+      this.listeners[type] = listener;
+    },
+    focus() {
+      this.focused += 1;
+    },
     replaceChildren(...nodes) {
       this.children = nodes;
     },
@@ -63,8 +70,12 @@ function fakeNode() {
 const previousDocument = global.document;
 try {
   global.document = { createElement: fakeNode };
-  const terminal = mount(fakeNode());
+  const host = fakeNode();
+  const terminal = mount(host);
   assert.equal(terminal.input.attributes['aria-label'], 'Terminal command');
+  assert.equal(typeof host.children[0].listeners.click, 'function');
+  host.children[0].listeners.click();
+  assert.equal(terminal.input.focused, 1);
   assert.doesNotThrow(() => mount(fakeNode(), { welcome: 'Ready.' }));
 } finally {
   global.document = previousDocument;

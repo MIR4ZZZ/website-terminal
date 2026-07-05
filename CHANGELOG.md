@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.10
+
+- Focused the command input when visitors click the terminal window.
+
 ## 1.0.9
 
 - Matched configured command keys case-insensitively.
