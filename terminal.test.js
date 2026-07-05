@@ -5,6 +5,12 @@ const { createCommandHistory, mount, runCommand } = require('./terminal.js');
 const commands = {
   about: { description: 'who this is', text: 'Browser-only terminal.' },
   time: { description: 'dynamic value', run: () => 'now' },
+  broken: {
+    description: 'throws',
+    run: () => {
+      throw new Error('private stack details');
+    },
+  },
 };
 
 assert.equal(runCommand('', commands).type, 'empty');
@@ -12,8 +18,10 @@ assert.equal(runCommand('clear', commands).type, 'clear');
 assert.match(runCommand('help', commands).text, /about - who this is/);
 assert.equal(runCommand('about', commands).text, 'Browser-only terminal.');
 assert.equal(runCommand('time', commands).text, 'now');
+assert.equal(runCommand('broken', commands).text, 'Command failed.');
 assert.match(runCommand('missing', commands).text, /Command not found/);
 assert.match(runCommand('toString', commands).text, /Command not found/);
+assert.match(runCommand('help').text, /help/);
 
 const history = createCommandHistory();
 assert.equal(history.previous(), '');

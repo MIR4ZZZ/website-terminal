@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Added a safe fallback when a custom command callback throws.
+
 ## 1.0.4
 
 - Scoped the widget CSS under `.website-terminal` for safer embeds.

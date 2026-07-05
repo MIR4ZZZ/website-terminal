@@ -27,7 +27,8 @@
     return String(entry);
   }
 
-  function runCommand(rawCommand, commands) {
+  function runCommand(rawCommand, commands = {}) {
+    commands = commands && typeof commands === 'object' ? commands : {};
     const command = rawCommand.trim().toLowerCase();
     if (!command) return { type: 'empty' };
     if (command === 'clear') return { type: 'clear' };
@@ -40,7 +41,11 @@
       };
     }
     if (Object.prototype.hasOwnProperty.call(commands, command)) {
-      return { type: 'output', text: commandText(commands[command], rawCommand) };
+      try {
+        return { type: 'output', text: commandText(commands[command], rawCommand) };
+      } catch (error) {
+        return { type: 'output', text: 'Command failed.' };
+      }
     }
     return { type: 'output', text: `Command not found: "${rawCommand}". Type "help".` };
   }
