@@ -64,6 +64,7 @@ try {
   global.document = { createElement: fakeNode };
   const terminal = mount(fakeNode());
   assert.equal(terminal.input.attributes['aria-label'], 'Terminal command');
+  assert.doesNotThrow(() => mount(fakeNode(), { welcome: 'Ready.' }));
 } finally {
   global.document = previousDocument;
 }

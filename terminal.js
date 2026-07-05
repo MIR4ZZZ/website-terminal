@@ -97,7 +97,8 @@
     if (!host) throw new Error('WebsiteTerminal target not found');
 
     const settings = { ...defaults, ...options };
-    const history = settings.welcome.map((text) => ({ type: 'system', text }));
+    const welcome = Array.isArray(settings.welcome) ? settings.welcome : [settings.welcome];
+    const history = welcome.filter((text) => text != null).map((text) => ({ type: 'system', text: String(text) }));
     const commandHistory = createCommandHistory();
     host.classList.add('website-terminal');
     host.replaceChildren();

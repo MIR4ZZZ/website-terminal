@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- Allowed `welcome` to be provided as a single string.
+
 ## 1.0.7
 
 - Made the public command runner tolerate missing or non-string input.
