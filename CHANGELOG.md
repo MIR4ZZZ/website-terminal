@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.11
+
+- Added `Ctrl+L` keyboard clearing inside the terminal input.
+
 ## 1.0.10
 
 - Focused the command input when visitors click the terminal window.

@@ -127,6 +127,12 @@
     windowNode.addEventListener('click', () => input.focus());
 
     input.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && event.key.toLowerCase() === 'l') {
+        event.preventDefault();
+        history.length = 0;
+        render(body, history);
+        return;
+      }
       if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
       event.preventDefault();
       input.value = event.key === 'ArrowUp' ? commandHistory.previous() : commandHistory.next();

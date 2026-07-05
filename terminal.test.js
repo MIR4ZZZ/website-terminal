@@ -76,6 +76,18 @@ try {
   assert.equal(typeof host.children[0].listeners.click, 'function');
   host.children[0].listeners.click();
   assert.equal(terminal.input.focused, 1);
+  const body = host.children[0].children[1];
+  assert.equal(body.children.length, 2);
+  let prevented = false;
+  terminal.input.listeners.keydown({
+    key: 'l',
+    ctrlKey: true,
+    preventDefault() {
+      prevented = true;
+    },
+  });
+  assert.equal(prevented, true);
+  assert.equal(body.children.length, 0);
   assert.doesNotThrow(() => mount(fakeNode(), { welcome: 'Ready.' }));
 } finally {
   global.document = previousDocument;
