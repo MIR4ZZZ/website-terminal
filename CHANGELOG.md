@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- Scoped the widget CSS under `.website-terminal` for safer embeds.
+
 ## 1.0.3
 
 - Added a screen-reader label to the terminal command input.

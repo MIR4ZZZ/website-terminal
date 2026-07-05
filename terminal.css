@@ -1,3 +1,8 @@
+.website-terminal,
+.website-terminal * {
+  box-sizing: border-box;
+}
+
 .website-terminal {
   --wt-bg: rgba(5, 8, 13, 0.94);
   --wt-border: rgba(255, 255, 255, 0.12);
@@ -11,7 +16,7 @@
   font-size: 0.9rem;
 }
 
-.wt-window {
+.website-terminal .wt-window {
   min-height: 320px;
   display: flex;
   overflow: hidden;
@@ -22,8 +27,8 @@
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
 }
 
-.wt-header,
-.wt-input-row {
+.website-terminal .wt-header,
+.website-terminal .wt-input-row {
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -31,48 +36,48 @@
   background: var(--wt-panel);
 }
 
-.wt-input-row {
+.website-terminal .wt-input-row {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 0;
 }
 
-.wt-dots {
+.website-terminal .wt-dots {
   display: flex;
   gap: 7px;
   margin-right: auto;
 }
 
-.wt-dot {
+.website-terminal .wt-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
 }
 
-.wt-dot-red {
+.website-terminal .wt-dot-red {
   background: #ef6f6c;
 }
 
-.wt-dot-yellow {
+.website-terminal .wt-dot-yellow {
   background: #f6c177;
 }
 
-.wt-dot-green {
+.website-terminal .wt-dot-green {
   background: #5dd39e;
 }
 
-.wt-title {
+.website-terminal .wt-title {
   color: var(--wt-muted);
   font-size: 0.78rem;
 }
 
-.wt-body {
+.website-terminal .wt-body {
   min-height: 220px;
   max-height: 360px;
   overflow-y: auto;
   padding: 14px;
 }
 
-.wt-output {
+.website-terminal .wt-output {
   margin-bottom: 8px;
   color: var(--wt-muted);
   line-height: 1.55;
@@ -80,27 +85,27 @@
   white-space: pre-wrap;
 }
 
-.wt-output[data-type="system"] {
+.website-terminal .wt-output[data-type="system"] {
   color: var(--wt-accent);
 }
 
-.wt-output[data-type="input"] {
+.website-terminal .wt-output[data-type="input"] {
   color: var(--wt-text);
 }
 
-.wt-line {
+.website-terminal .wt-line {
   display: flex;
   width: 100%;
   align-items: center;
   gap: 8px;
 }
 
-.wt-prompt {
+.website-terminal .wt-prompt {
   color: var(--wt-prompt);
   font-weight: 700;
 }
 
-.wt-input {
+.website-terminal .wt-input {
   width: 100%;
   min-width: 0;
   border: 0;
@@ -110,11 +115,11 @@
   font: inherit;
 }
 
-.wt-input:focus-visible {
+.website-terminal .wt-input:focus-visible {
   border-radius: 4px;
   box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.2);
 }
 
-.wt-input::placeholder {
+.website-terminal .wt-input::placeholder {
   color: rgba(203, 213, 225, 0.52);
 }

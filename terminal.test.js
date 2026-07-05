@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const { createCommandHistory, mount, runCommand } = require('./terminal.js');
 
 const commands = {
@@ -52,5 +53,17 @@ try {
 } finally {
   global.document = previousDocument;
 }
+
+const css = fs.readFileSync('./terminal.css', 'utf8');
+assert.match(css, /\.website-terminal,\s*\.website-terminal \*\s*{[^}]*box-sizing:\s*border-box;/);
+
+const unscopedWidgetSelectors = css
+  .split('{')
+  .slice(0, -1)
+  .flatMap((block) => block.split('}').pop().split(','))
+  .map((selector) => selector.trim())
+  .filter((selector) => selector.startsWith('.wt-'));
+
+assert.deepEqual(unscopedWidgetSelectors, []);
 
 console.log('terminal checks passed');
