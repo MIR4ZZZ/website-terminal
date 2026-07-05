@@ -1,6 +1,6 @@
 {
   "name": "website-terminal",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Copyable fake terminal widget for normal websites.",
   "license": "MIT",
   "main": "terminal.js",

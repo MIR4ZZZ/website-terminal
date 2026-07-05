@@ -133,6 +133,11 @@
         render(body, history);
         return;
       }
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        input.value = '';
+        return;
+      }
       if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
       event.preventDefault();
       input.value = event.key === 'ArrowUp' ? commandHistory.previous() : commandHistory.next();

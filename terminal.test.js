@@ -88,6 +88,17 @@ try {
   });
   assert.equal(prevented, true);
   assert.equal(body.children.length, 0);
+  terminal.input.value = 'draft command';
+  let escapePrevented = false;
+  terminal.input.listeners.keydown({
+    key: 'Escape',
+    preventDefault() {
+      escapePrevented = true;
+    },
+  });
+  assert.equal(escapePrevented, true);
+  assert.equal(terminal.input.value, '');
+  assert.equal(body.children.length, 0);
   assert.doesNotThrow(() => mount(fakeNode(), { welcome: 'Ready.' }));
 } finally {
   global.document = previousDocument;

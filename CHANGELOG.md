@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.12
+
+- Added Escape to clear the current typed command.
+
 ## 1.0.11
 
 - Added `Ctrl+L` keyboard clearing inside the terminal input.
