@@ -45,6 +45,30 @@
     return { type: 'output', text: `Command not found: "${rawCommand}". Type "help".` };
   }
 
+  function createCommandHistory() {
+    const entries = [];
+    let index = 0;
+
+    return {
+      push(command) {
+        const value = command.trim();
+        if (!value) return;
+        entries.push(value);
+        index = entries.length;
+      },
+      previous() {
+        if (!entries.length) return '';
+        index = Math.max(0, index - 1);
+        return entries[index] || '';
+      },
+      next() {
+        if (!entries.length) return '';
+        index = Math.min(entries.length, index + 1);
+        return index === entries.length ? '' : entries[index];
+      },
+    };
+  }
+
   function el(tag, className, text) {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -68,6 +92,7 @@
 
     const settings = { ...defaults, ...options };
     const history = settings.welcome.map((text) => ({ type: 'system', text }));
+    const commandHistory = createCommandHistory();
     host.classList.add('website-terminal');
     host.replaceChildren();
 
@@ -89,11 +114,19 @@
     line.append(el('span', 'wt-prompt', settings.prompt), input);
     form.append(line);
 
+    input.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+      event.preventDefault();
+      input.value = event.key === 'ArrowUp' ? commandHistory.previous() : commandHistory.next();
+      input.setSelectionRange(input.value.length, input.value.length);
+    });
+
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const rawCommand = input.value.trim();
       const result = runCommand(rawCommand, settings.commands);
       if (result.type === 'empty') return;
+      commandHistory.push(rawCommand);
       if (result.type === 'clear') {
         history.length = 0;
       } else {
@@ -109,5 +142,5 @@
     return { input, run: (command) => runCommand(command, settings.commands) };
   }
 
-  return { mount, runCommand };
+  return { createCommandHistory, mount, runCommand };
 });

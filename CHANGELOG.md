@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Added ArrowUp and ArrowDown command history in the terminal input.
+
 ## 1.0.1
 
 - Added CDN/local asset mode to the builder embed output.

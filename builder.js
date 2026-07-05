@@ -26,8 +26,8 @@
     js: './terminal.js',
   };
   const cdnAssets = {
-    css: 'https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.css',
-    js: 'https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.1/terminal.js',
+    css: 'https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.2/terminal.css',
+    js: 'https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.2/terminal.js',
   };
 
   function cloneConfig(config) {
