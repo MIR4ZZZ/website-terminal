@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+- Made the public command runner tolerate missing or non-string input.
+
 ## 1.0.6
 
 - Deduplicated built-in command names in the `help` output.

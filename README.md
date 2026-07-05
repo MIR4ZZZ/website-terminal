@@ -44,11 +44,11 @@ Using Astro, Vite, React, Next.js, WordPress, Webflow, or a strict CSP? See [REC
 Paste this anywhere:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.6/terminal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.7/terminal.css" />
 
 <div id="site-terminal"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.6/terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.7/terminal.js"></script>
 <script>
   WebsiteTerminal.mount('#site-terminal', {
     title: 'guest@your-site: ~',

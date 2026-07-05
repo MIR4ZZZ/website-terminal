@@ -29,7 +29,8 @@
 
   function runCommand(rawCommand, commands = {}) {
     commands = commands && typeof commands === 'object' ? commands : {};
-    const command = rawCommand.trim().toLowerCase();
+    const rawInput = String(rawCommand ?? '').trim();
+    const command = rawInput.toLowerCase();
     if (!command) return { type: 'empty' };
     if (command === 'clear') return { type: 'clear' };
     if (command === 'help') {
@@ -42,12 +43,12 @@
     }
     if (Object.prototype.hasOwnProperty.call(commands, command)) {
       try {
-        return { type: 'output', text: commandText(commands[command], rawCommand) };
+        return { type: 'output', text: commandText(commands[command], rawInput) };
       } catch (error) {
         return { type: 'output', text: 'Command failed.' };
       }
     }
-    return { type: 'output', text: `Command not found: "${rawCommand}". Type "help".` };
+    return { type: 'output', text: `Command not found: "${rawInput}". Type "help".` };
   }
 
   function createCommandHistory() {

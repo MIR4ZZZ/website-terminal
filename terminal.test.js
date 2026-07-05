@@ -26,6 +26,8 @@ assert.deepEqual(
   runCommand('help', { help: 'custom help', clear: 'custom clear' }).text.match(/\b(help|clear)\b/g),
   ['help', 'clear'],
 );
+assert.equal(runCommand().type, 'empty');
+assert.match(runCommand(404, { 404: 'Not found.' }).text, /Not found/);
 
 const history = createCommandHistory();
 assert.equal(history.previous(), '');
