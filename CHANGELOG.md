@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+- Deduplicated built-in command names in the `help` output.
+
 ## 1.0.5
 
 - Added a safe fallback when a custom command callback throws.

@@ -12,7 +12,7 @@
   };
 
   function commandNames(commands) {
-    return ['help', ...Object.keys(commands), 'clear'];
+    return [...new Set(['help', ...Object.keys(commands), 'clear'])];
   }
 
   function commandDescription(entry) {

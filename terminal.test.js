@@ -22,6 +22,10 @@ assert.equal(runCommand('broken', commands).text, 'Command failed.');
 assert.match(runCommand('missing', commands).text, /Command not found/);
 assert.match(runCommand('toString', commands).text, /Command not found/);
 assert.match(runCommand('help').text, /help/);
+assert.deepEqual(
+  runCommand('help', { help: 'custom help', clear: 'custom clear' }).text.match(/\b(help|clear)\b/g),
+  ['help', 'clear'],
+);
 
 const history = createCommandHistory();
 assert.equal(history.previous(), '');

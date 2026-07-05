@@ -24,6 +24,7 @@ If this saves you time, star the repo so other people can find it.
 - Labeled input for screen readers
 - Scoped CSS for safer copy-paste embeds
 - Safe fallback if a custom command throws
+- Deduplicated built-in command names in `help`
 - Builder UI that generates the embed code for you
 
 ## Fastest Start
@@ -43,11 +44,11 @@ Using Astro, Vite, React, Next.js, WordPress, Webflow, or a strict CSP? See [REC
 Paste this anywhere:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.5/terminal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.6/terminal.css" />
 
 <div id="site-terminal"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.5/terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.6/terminal.js"></script>
 <script>
   WebsiteTerminal.mount('#site-terminal', {
     title: 'guest@your-site: ~',
