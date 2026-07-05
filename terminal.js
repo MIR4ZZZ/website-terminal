@@ -41,9 +41,12 @@
           .join('\n')}`,
       };
     }
-    if (Object.prototype.hasOwnProperty.call(commands, command)) {
+    const commandKey = Object.prototype.hasOwnProperty.call(commands, command)
+      ? command
+      : Object.keys(commands).find((name) => name.toLowerCase() === command);
+    if (commandKey !== undefined) {
       try {
-        return { type: 'output', text: commandText(commands[command], rawInput) };
+        return { type: 'output', text: commandText(commands[commandKey], rawInput) };
       } catch (error) {
         return { type: 'output', text: 'Command failed.' };
       }

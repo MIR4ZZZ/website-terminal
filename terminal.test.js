@@ -17,6 +17,7 @@ assert.equal(runCommand('', commands).type, 'empty');
 assert.equal(runCommand('clear', commands).type, 'clear');
 assert.match(runCommand('help', commands).text, /about - who this is/);
 assert.equal(runCommand('about', commands).text, 'Browser-only terminal.');
+assert.equal(runCommand('about', { About: 'Uppercase key works.' }).text, 'Uppercase key works.');
 assert.equal(runCommand('time', commands).text, 'now');
 assert.equal(runCommand('broken', commands).text, 'Command failed.');
 assert.match(runCommand('missing', commands).text, /Command not found/);

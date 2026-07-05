@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9
+
+- Matched configured command keys case-insensitively.
+
 ## 1.0.8
 
 - Allowed `welcome` to be provided as a single string.
