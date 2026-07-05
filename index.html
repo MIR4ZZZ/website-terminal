@@ -28,10 +28,23 @@
     <style>
       :root {
         color-scheme: dark;
+        --page: #101214;
+        --surface: rgba(20, 24, 30, 0.84);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: #f5f7fa;
+        --muted: #a8b0bd;
+        --accent: #7dd3fc;
+        --accent-strong: #b7eaff;
+        --ink-on-accent: #071016;
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #101214;
-        color: #f5f7fa;
+        background: var(--page);
+        color: var(--text);
+      }
+
+      html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       * {
@@ -41,19 +54,20 @@
       body {
         margin: 0;
         min-height: 100vh;
-        padding: 24px;
+        padding: 28px;
         background:
-          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-          #101214;
-        background-size: 36px 36px;
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 320px),
+          linear-gradient(rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+          var(--page);
+        background-size: 100% 100%, 36px 36px, 36px 36px;
       }
 
       main {
         width: min(1180px, 100%);
         margin: 0 auto;
         display: grid;
-        gap: 18px;
+        gap: 20px;
       }
 
       h1,
@@ -63,15 +77,18 @@
       }
 
       h1 {
-        font-size: clamp(2rem, 6vw, 4.4rem);
+        max-width: 820px;
+        font-size: clamp(2.35rem, 7vw, 5.3rem);
         line-height: 0.95;
         letter-spacing: 0;
+        text-wrap: balance;
       }
 
       p {
         max-width: 680px;
-        color: #a8b0bd;
+        color: var(--muted);
         line-height: 1.65;
+        text-wrap: pretty;
       }
 
       h2 {
@@ -91,6 +108,31 @@
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 18px;
         align-items: end;
+        padding: 18px 0 4px;
+      }
+
+      .hero-copy {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .hero-meta span {
+        min-height: 32px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+        color: var(--accent-strong);
+        font-size: 0.78rem;
+        font-weight: 800;
       }
 
       .hero-actions {
@@ -101,25 +143,66 @@
       }
 
       .link-button {
-        border: 1px solid rgba(245, 247, 250, 0.16);
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.14);
         border-radius: 6px;
         padding: 10px 12px;
-        color: #f5f7fa;
+        color: var(--text);
         font-size: 0.9rem;
         font-weight: 800;
         text-decoration: none;
+        transition-property: scale, box-shadow, background-color, color;
+        transition-duration: 150ms;
+        transition-timing-function: ease-out;
       }
 
       .link-button.primary {
-        background: #7dd3fc;
-        color: #071016;
+        background: var(--accent);
+        color: var(--ink-on-accent);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.18),
+          0 14px 34px rgba(125, 211, 252, 0.18);
+      }
+
+      .link-button:hover,
+      .link-button:focus-visible {
+        box-shadow:
+          0 0 0 1px rgba(245, 247, 250, 0.22),
+          0 10px 26px rgba(0, 0, 0, 0.24);
+      }
+
+      .link-button:active {
+        scale: 0.96;
       }
 
       .panel {
-        border: 1px solid rgba(245, 247, 250, 0.14);
+        border: 0;
         border-radius: 8px;
         padding: 18px;
-        background: rgba(18, 22, 28, 0.82);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 120px),
+          var(--surface);
+        box-shadow:
+          0 0 0 1px var(--line),
+          0 24px 70px rgba(0, 0, 0, 0.32);
+        backdrop-filter: blur(14px);
+      }
+
+      .preview-panel {
+        position: sticky;
+        top: 24px;
+      }
+
+      .preview-panel .website-terminal .wt-window {
+        min-height: 420px;
+      }
+
+      .preview-panel .website-terminal .wt-body {
+        flex: 1;
+        max-height: none;
       }
 
       .panel-header {
@@ -131,7 +214,7 @@
       }
 
       .panel-kicker {
-        color: #7dd3fc;
+        color: var(--accent);
         font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
         font-size: 0.72rem;
         text-transform: uppercase;
@@ -150,7 +233,7 @@
 
       label,
       .small-title {
-        color: #f5f7fa;
+        color: var(--text);
         font-size: 0.82rem;
         font-weight: 700;
       }
@@ -159,12 +242,25 @@
       textarea,
       select {
         width: 100%;
+        min-height: 44px;
         border: 1px solid rgba(245, 247, 250, 0.14);
         border-radius: 6px;
         padding: 10px 12px;
         background: rgba(4, 8, 14, 0.68);
-        color: #f5f7fa;
+        color: var(--text);
         font: inherit;
+        outline: 0;
+        transition-property: border-color, box-shadow, background-color;
+        transition-duration: 150ms;
+        transition-timing-function: ease-out;
+      }
+
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible {
+        border-color: rgba(125, 211, 252, 0.64);
+        background: rgba(4, 8, 14, 0.86);
+        box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.18);
       }
 
       textarea {
@@ -180,19 +276,38 @@
       }
 
       button {
-        border: 1px solid rgba(245, 247, 250, 0.16);
+        min-height: 44px;
+        border: 0;
         border-radius: 6px;
         padding: 10px 13px;
-        background: #7dd3fc;
-        color: #071016;
+        background: var(--accent);
+        color: var(--ink-on-accent);
         cursor: pointer;
         font: inherit;
         font-weight: 800;
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.16),
+          0 10px 24px rgba(125, 211, 252, 0.14);
+        transition-property: scale, box-shadow, background-color, color;
+        transition-duration: 150ms;
+        transition-timing-function: ease-out;
       }
 
       button.secondary {
         background: transparent;
-        color: #f5f7fa;
+        color: var(--text);
+        box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.14);
+      }
+
+      button:hover,
+      button:focus-visible {
+        box-shadow:
+          0 0 0 1px rgba(245, 247, 250, 0.24),
+          0 10px 26px rgba(0, 0, 0, 0.24);
+      }
+
+      button:active {
+        scale: 0.96;
       }
 
       .command-list {
@@ -210,18 +325,30 @@
         border-radius: 6px;
         padding: 10px;
         background: rgba(4, 8, 14, 0.48);
+        transition-property: border-color, background-color;
+        transition-duration: 150ms;
+        transition-timing-function: ease-out;
+      }
+
+      .command-item:hover {
+        border-color: rgba(125, 211, 252, 0.28);
+        background: rgba(4, 8, 14, 0.64);
       }
 
       .command-name {
-        color: #7dd3fc;
+        color: var(--accent);
         font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
         font-weight: 800;
       }
 
       .command-description,
       .status {
-        color: #a8b0bd;
+        color: var(--muted);
         font-size: 0.88rem;
+      }
+
+      .status {
+        min-height: 1.45em;
       }
 
       .remove-button {
@@ -229,7 +356,7 @@
       }
 
       .embed-output {
-        min-height: 180px;
+        min-height: 210px;
         font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
         font-size: 0.82rem;
       }
@@ -237,7 +364,7 @@
       code {
         display: block;
         margin-top: 12px;
-        color: #7dd3fc;
+        color: var(--accent);
         font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
         font-size: 0.84rem;
         line-height: 1.7;
@@ -245,8 +372,13 @@
       }
 
       @media (max-width: 760px) {
+        body {
+          padding: 16px;
+        }
+
         .hero-row {
           grid-template-columns: 1fr;
+          padding-top: 8px;
         }
 
         .hero-actions {
@@ -256,15 +388,28 @@
         .builder-grid {
           grid-template-columns: 1fr;
         }
+
+        .preview-panel {
+          position: static;
+        }
+
+        .panel {
+          padding: 14px;
+        }
       }
     </style>
   </head>
   <body>
     <main>
       <div class="hero-row">
-        <div>
+        <div class="hero-copy">
           <h1>Website Terminal</h1>
           <p>Build a browser-only terminal, add commands and answers, preview it, then copy the embed code.</p>
+          <div class="hero-meta" aria-label="Project highlights">
+            <span>MIT licensed</span>
+            <span>No dependencies</span>
+            <span>Copy-paste embed</span>
+          </div>
         </div>
         <nav class="hero-actions" aria-label="Project links">
           <a class="link-button primary" href="https://github.com/MIR4ZZZ/website-terminal">Star on GitHub</a>
@@ -275,7 +420,7 @@
       </div>
 
       <section class="builder-grid" aria-label="Terminal builder">
-        <div class="panel">
+        <div class="panel preview-panel">
           <div class="panel-header">
             <h2>Live preview</h2>
             <p class="panel-kicker">browser only</p>
