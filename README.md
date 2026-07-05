@@ -122,6 +122,38 @@ WebsiteTerminal.mount('#site-terminal', {
 
 Command output is rendered with `textContent`, not `innerHTML`, so visitor input cannot inject HTML.
 
+## API Reference
+
+Mount the widget with `WebsiteTerminal.mount(target, options)`.
+
+| Option | Type | Default |
+| --- | --- | --- |
+| `target` | CSS selector or DOM element | Required |
+| `title` | string | `guest@website: ~` |
+| `prompt` | string | `$` |
+| `placeholder` | string | `Type "help" and press Enter...` |
+| `welcome` | string or string[] | `['Website terminal loaded.', 'Type "help" for commands.']` |
+| `commands` | object | `{}` |
+
+Command names are matched case-insensitively. `help` and `clear` stay reserved for the built-in help list and screen clear action.
+
+Each command can be a plain string, a function, or an object:
+
+```js
+commands: {
+  about: 'A short static answer.',
+  time: () => new Date().toLocaleString(),
+  docs: {
+    description: 'read the docs',
+    text: 'https://example.com/docs',
+  },
+  echo: {
+    description: 'repeat the raw command',
+    run: (rawCommand) => `You typed: ${rawCommand}`,
+  },
+}
+```
+
 ## Customize
 
 Change the terminal colors with CSS variables:
