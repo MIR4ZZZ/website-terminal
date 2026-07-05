@@ -111,6 +111,7 @@
     input.type = 'text';
     input.placeholder = settings.placeholder;
     input.autocomplete = 'off';
+    input.setAttribute('aria-label', 'Terminal command');
     line.append(el('span', 'wt-prompt', settings.prompt), input);
     form.append(line);
 

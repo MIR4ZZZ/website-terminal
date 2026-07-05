@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const { createCommandHistory, runCommand } = require('./terminal.js');
+const { createCommandHistory, mount, runCommand } = require('./terminal.js');
 
 const commands = {
   about: { description: 'who this is', text: 'Browser-only terminal.' },
@@ -24,5 +24,33 @@ assert.equal(history.previous(), 'about');
 assert.equal(history.next(), 'projects');
 assert.equal(history.next(), '');
 assert.equal(history.next(), '');
+
+function fakeNode() {
+  return {
+    attributes: {},
+    children: [],
+    classList: { add() {} },
+    dataset: {},
+    append(...nodes) {
+      this.children.push(...nodes);
+    },
+    addEventListener() {},
+    replaceChildren(...nodes) {
+      this.children = nodes;
+    },
+    setAttribute(name, value) {
+      this.attributes[name] = value;
+    },
+  };
+}
+
+const previousDocument = global.document;
+try {
+  global.document = { createElement: fakeNode };
+  const terminal = mount(fakeNode());
+  assert.equal(terminal.input.attributes['aria-label'], 'Terminal command');
+} finally {
+  global.document = previousDocument;
+}
 
 console.log('terminal checks passed');

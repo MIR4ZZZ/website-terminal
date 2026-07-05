@@ -21,6 +21,7 @@ If this saves you time, star the repo so other people can find it.
 - Browser-only: it never runs real shell commands
 - Built-in `help` and `clear`
 - ArrowUp and ArrowDown command history
+- Labeled input for screen readers
 - Builder UI that generates the embed code for you
 
 ## Fastest Start
@@ -40,11 +41,11 @@ Using Astro, Vite, React, Next.js, WordPress, Webflow, or a strict CSP? See [REC
 Paste this anywhere:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.2/terminal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.3/terminal.css" />
 
 <div id="site-terminal"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.2/terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.3/terminal.js"></script>
 <script>
   WebsiteTerminal.mount('#site-terminal', {
     title: 'guest@your-site: ~',

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Added a screen-reader label to the terminal command input.
+
 ## 1.0.2
 
 - Added ArrowUp and ArrowDown command history in the terminal input.
