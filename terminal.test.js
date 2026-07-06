@@ -20,6 +20,7 @@ assert.equal(runCommand('about', commands).text, 'Browser-only terminal.');
 assert.equal(runCommand('about', { About: 'Uppercase key works.' }).text, 'Uppercase key works.');
 assert.equal(runCommand('echo hello world', { echo: (rawCommand) => rawCommand }).text, 'echo hello world');
 assert.equal(runCommand('count', { count: () => 0 }).text, '0');
+assert.equal(runCommand('stock', { stock: { description: 'available units', text: 0 } }).text, '0');
 assert.equal(runCommand('time', commands).text, 'now');
 assert.equal(runCommand('broken', commands).text, 'Command failed.');
 assert.match(runCommand('missing', commands).text, /Command not found/);

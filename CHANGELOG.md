@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.15
+
+- Converted command object `text` values to text before rendering.
+
 ## 1.0.14
 
 - Converted callback command return values to text before rendering.

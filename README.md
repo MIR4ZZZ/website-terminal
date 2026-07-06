@@ -56,11 +56,11 @@ Using Astro, Vite, React, Next.js, WordPress, Webflow, or a strict CSP? See [REC
 Paste this anywhere:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.14/terminal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.15/terminal.css" />
 
 <div id="site-terminal"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.14/terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.15/terminal.js"></script>
 <script>
   WebsiteTerminal.mount('#site-terminal', {
     title: 'guest@your-site: ~',
@@ -165,7 +165,7 @@ commands: {
 }
 ```
 
-Callback return values are converted to text before rendering.
+Callback return values and object `text` values are converted to text before rendering.
 
 ## Customize
 
