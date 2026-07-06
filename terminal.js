@@ -12,7 +12,12 @@
   };
 
   function commandNames(commands) {
-    return [...new Set(['help', ...Object.keys(commands), 'clear'])];
+    const names = ['help'];
+    Object.keys(commands).forEach((name) => {
+      if (name.toLowerCase() !== 'help' && name.toLowerCase() !== 'clear') names.push(name);
+    });
+    names.push('clear');
+    return names;
   }
 
   function commandDescription(entry) {

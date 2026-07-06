@@ -30,6 +30,14 @@ assert.deepEqual(
   runCommand('help', { help: 'custom help', clear: 'custom clear' }).text.match(/\b(help|clear)\b/g),
   ['help', 'clear'],
 );
+const reservedHelp = runCommand('help', { Help: 'custom help', CLEAR: 'custom clear', About: 'Uppercase key' }).text;
+assert.deepEqual(
+  reservedHelp
+    .split('\n')
+    .slice(1)
+    .map((line) => line.trim().split(/\s+/, 1)[0]),
+  ['help', 'About', 'clear'],
+);
 assert.equal(runCommand().type, 'empty');
 assert.match(runCommand(404, { 404: 'Not found.' }).text, /Not found/);
 

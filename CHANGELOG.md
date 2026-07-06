@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.16
+
+- Deduplicated built-in help commands case-insensitively.
+
 ## 1.0.15
 
 - Converted command object `text` values to text before rendering.
