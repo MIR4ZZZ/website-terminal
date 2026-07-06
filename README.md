@@ -173,10 +173,12 @@ Change the terminal colors with CSS variables:
 
 ```css
 .website-terminal {
-  --wt-bg: #05080d;
+  --wt-bg: rgba(6, 8, 10, 0.95);
+  --wt-border: rgba(255, 255, 255, 0.12);
+  --wt-panel: rgba(255, 255, 255, 0.055);
   --wt-text: #f5f7fa;
-  --wt-muted: #a8b0bd;
-  --wt-accent: #7dd3fc;
+  --wt-muted: #aeb7b2;
+  --wt-accent: #8fe6bf;
   --wt-prompt: #f6c177;
 }
 ```
