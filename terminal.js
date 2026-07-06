@@ -41,9 +41,10 @@
           .join('\n')}`,
       };
     }
-    const commandKey = Object.prototype.hasOwnProperty.call(commands, command)
-      ? command
-      : Object.keys(commands).find((name) => name.toLowerCase() === command);
+    const inputCommand = command.split(/\s+/, 1)[0];
+    const commandKey =
+      Object.keys(commands).find((name) => name.toLowerCase() === command) ??
+      Object.keys(commands).find((name) => name.toLowerCase() === inputCommand);
     if (commandKey !== undefined) {
       try {
         return { type: 'output', text: commandText(commands[commandKey], rawInput) };

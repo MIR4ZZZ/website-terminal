@@ -25,6 +25,7 @@ If this saves you time, star the repo so other people can find it.
 - Escape clears the current input
 - Labeled input for screen readers
 - Scoped CSS for safer copy-paste embeds
+- Command arguments for callback commands
 - Safe fallback if a custom command throws
 - Deduplicated built-in command names in `help`
 - Forgiving `welcome` config for common copy-paste mistakes
@@ -47,11 +48,11 @@ Using Astro, Vite, React, Next.js, WordPress, Webflow, or a strict CSP? See [REC
 Paste this anywhere:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.12/terminal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.13/terminal.css" />
 
 <div id="site-terminal"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.12/terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MIR4ZZZ/website-terminal@v1.0.13/terminal.js"></script>
 <script>
   WebsiteTerminal.mount('#site-terminal', {
     title: 'guest@your-site: ~',
@@ -137,7 +138,7 @@ Mount the widget with `WebsiteTerminal.mount(target, options)`.
 | `welcome` | string or string[] | `['Website terminal loaded.', 'Type "help" for commands.']` |
 | `commands` | object | `{}` |
 
-Command names are matched case-insensitively. `help` and `clear` stay reserved for the built-in help list and screen clear action.
+Command names are matched case-insensitively. If the full typed line is not a command, the first word is matched as the command and the full line is passed to callbacks. `help` and `clear` stay reserved for the built-in help list and screen clear action.
 
 Each command can be a plain string, a function, or an object:
 

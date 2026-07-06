@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.13
+
+- Matched the first typed word as a command so callbacks can receive arguments.
+
 ## 1.0.12
 
 - Added Escape to clear the current typed command.
