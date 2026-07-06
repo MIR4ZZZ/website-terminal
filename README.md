@@ -1,6 +1,7 @@
 # Website Terminal
 
 [![Checks](https://github.com/MIR4ZZZ/website-terminal/actions/workflows/checks.yml/badge.svg)](https://github.com/MIR4ZZZ/website-terminal/actions/workflows/checks.yml)
+[![GitHub stars](https://img.shields.io/github/stars/MIR4ZZZ/website-terminal?style=social)](https://github.com/MIR4ZZZ/website-terminal/stargazers)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![No dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-JS-f7df1e.svg)
@@ -34,6 +35,13 @@ If this saves you time, star the repo so other people can find it.
 ## Fastest Start
 
 Open the [live builder](https://mir4zzz.github.io/website-terminal/), add your commands and answers, then copy the generated embed code.
+
+| If you want to... | Use this |
+| --- | --- |
+| Add a terminal to a live site quickly | [Live builder](https://mir4zzz.github.io/website-terminal/) |
+| Paste one snippet into a custom HTML block | CDN mode |
+| Keep all assets in your own repo | Local files mode |
+| Fork the whole starter and customize it | [Use this template](https://github.com/new?template_name=website-terminal&template_owner=MIR4ZZZ) |
 
 Want the smallest possible page? Open `examples/minimal.html`. Want a no-download embed? Open `examples/cdn.html`.
 
