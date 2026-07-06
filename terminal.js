@@ -21,8 +21,8 @@
   }
 
   function commandText(entry, rawCommand) {
-    if (typeof entry === 'function') return entry(rawCommand);
-    if (entry && typeof entry.run === 'function') return entry.run(rawCommand);
+    if (typeof entry === 'function') return String(entry(rawCommand));
+    if (entry && typeof entry.run === 'function') return String(entry.run(rawCommand));
     if (entry && typeof entry.text === 'string') return entry.text;
     return String(entry);
   }

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.14
+
+- Converted callback command return values to text before rendering.
+- Polished the builder page layout and generic terminal theme.
+
 ## 1.0.13
 
 - Matched the first typed word as a command so callbacks can receive arguments.
