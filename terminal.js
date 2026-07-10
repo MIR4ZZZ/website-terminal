@@ -119,7 +119,9 @@
     header.append(dots, el('div', 'wt-title', settings.title));
 
     const body = el('div', 'wt-body');
-    body.setAttribute('aria-live', 'polite');
+    const liveStatus = el('div', 'wt-live-status');
+    liveStatus.setAttribute('aria-live', 'polite');
+    liveStatus.setAttribute('aria-atomic', 'true');
 
     const form = el('form', 'wt-input-row');
     const line = el('label', 'wt-line');
@@ -158,14 +160,16 @@
       commandHistory.push(rawCommand);
       if (result.type === 'clear') {
         history.length = 0;
+        liveStatus.textContent = 'Terminal cleared.';
       } else {
         history.push({ type: 'input', text: `${settings.prompt} ${rawCommand}` }, result);
+        liveStatus.textContent = result.text;
       }
       input.value = '';
       render(body, history);
     });
 
-    windowNode.append(header, body, form);
+    windowNode.append(header, body, form, liveStatus);
     host.append(windowNode);
     render(body, history);
     return { input, run: (command) => runCommand(command, settings.commands) };

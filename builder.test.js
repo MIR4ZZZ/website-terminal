@@ -25,10 +25,13 @@ assert.match(embedCode({ title: 'x', welcome: [], commands: {} }, cdnAssets), /c
 function node() {
   return {
     dataset: {},
+    listeners: {},
     style: {},
     value: '',
     append() {},
-    addEventListener() {},
+    addEventListener(type, listener) {
+      this.listeners[type] = listener;
+    },
     replaceChildren() {},
     select() {},
     setAttribute() {},
@@ -58,5 +61,32 @@ assert.doesNotThrow(() => {
     },
   });
 });
+
+const copyNodes = new Map();
+const copyDocument = {
+  readyState: 'complete',
+  addEventListener() {},
+  createElement: node,
+  execCommand() {
+    return false;
+  },
+  querySelector(selector) {
+    if (!copyNodes.has(selector)) copyNodes.set(selector, node());
+    return copyNodes.get(selector);
+  },
+};
+
+const copyContext = {
+  document: copyDocument,
+  module: { exports: {} },
+  navigator: {},
+  window: {
+    document: copyDocument,
+    WebsiteTerminal: { mount() {} },
+  },
+};
+vm.runInNewContext(fs.readFileSync('./builder.js', 'utf8'), copyContext);
+copyNodes.get('#copyButton').listeners.click();
+assert.equal(copyNodes.get('#statusText').textContent, 'Copy failed. Select the code and copy manually.');
 
 console.log('builder checks passed');

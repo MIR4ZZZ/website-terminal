@@ -88,6 +88,10 @@ try {
   host.children[0].listeners.click();
   assert.equal(terminal.input.focused, 1);
   const body = host.children[0].children[1];
+  const liveStatus = host.children[0].children[3];
+  assert.equal(body.attributes['aria-live'], undefined);
+  assert.equal(liveStatus.attributes['aria-live'], 'polite');
+  assert.equal(liveStatus.attributes['aria-atomic'], 'true');
   assert.equal(body.children.length, 2);
   let prevented = false;
   terminal.input.listeners.keydown({
@@ -110,6 +114,20 @@ try {
   assert.equal(escapePrevented, true);
   assert.equal(terminal.input.value, '');
   assert.equal(body.children.length, 0);
+  terminal.input.value = 'help';
+  let submitted = false;
+  host.children[0].children[2].listeners.submit({
+    preventDefault() {
+      submitted = true;
+    },
+  });
+  assert.equal(submitted, true);
+  assert.match(liveStatus.textContent, /Available commands/);
+  terminal.input.value = 'clear';
+  host.children[0].children[2].listeners.submit({
+    preventDefault() {},
+  });
+  assert.equal(liveStatus.textContent, 'Terminal cleared.');
   assert.doesNotThrow(() => mount(fakeNode(), { welcome: 'Ready.' }));
 } finally {
   global.document = previousDocument;

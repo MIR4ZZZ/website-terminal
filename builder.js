@@ -159,13 +159,21 @@
       syncBaseConfig();
       embedOutput.value = embedCode(config, selectedAssets());
       embedOutput.select();
+
+      let copied = false;
       try {
-        if (navigator.clipboard) await navigator.clipboard.writeText(embedOutput.value);
-        else document.execCommand('copy');
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(embedOutput.value);
+          copied = true;
+        } else {
+          copied = document.execCommand('copy');
+        }
       } catch (error) {
-        document.execCommand('copy');
+        copied = document.execCommand('copy');
       }
-      statusText.textContent = 'Embed code copied.';
+      statusText.textContent = copied
+        ? 'Embed code copied.'
+        : 'Copy failed. Select the code and copy manually.';
     });
 
     fillBaseFields();
