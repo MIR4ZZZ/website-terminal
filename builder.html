@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build - Website Terminal</title>
+    <meta
+      name="description"
+      content="Use the Website Terminal builder to write commands, preview replies, and copy a ready embed snippet."
+    />
+    <meta property="og:title" content="Build - Website Terminal" />
+    <meta
+      property="og:description"
+      content="Write commands, preview replies, and copy the embed code for a browser-only website terminal."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mir4zzz.github.io/website-terminal/builder.html" />
+    <meta property="og:image" content="https://mir4zzz.github.io/website-terminal/assets/demo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Build - Website Terminal" />
+    <meta
+      name="twitter:description"
+      content="Build and copy a browser-only command terminal for your website."
+    />
+    <meta name="twitter:image" content="https://mir4zzz.github.io/website-terminal/assets/demo.png" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./terminal.css" />
+    <link rel="stylesheet" href="./site.css" />
+  </head>
+  <body class="builder-page">
+    <main class="builder-shell">
+      <header class="topbar studio-topbar" aria-label="Website Terminal builder">
+        <a class="brand-mark" href="./index.html" aria-label="Website Terminal home">
+          <span class="brand-glyph" aria-hidden="true">&gt;_</span>
+          <span>Website Terminal</span>
+        </a>
+        <nav class="topnav" aria-label="Primary navigation">
+          <a href="./index.html">Preview</a>
+          <a class="nav-cta" href="./builder.html" aria-current="page">Build</a>
+          <a href="https://github.com/MIR4ZZZ/website-terminal">GitHub</a>
+        </nav>
+      </header>
+
+      <section class="studio-grid" aria-label="Command generator">
+        <aside class="studio-panel builder-panel">
+          <div class="studio-heading">
+            <p class="eyebrow">Generator studio</p>
+            <h1>Shape the commands your visitors will remember.</h1>
+          </div>
+
+          <div class="builder-stats" aria-label="Builder status">
+            <span id="commandCountStat">0 commands</span>
+            <span id="assetModeStat">CDN embed</span>
+            <span id="previewStateStat">Preview synced</span>
+          </div>
+
+          <form class="builder-form" id="builderForm">
+            <section class="form-column setup-fields" aria-label="Terminal setup">
+              <div class="section-label">
+                <span>01</span>
+                <strong>Identity</strong>
+              </div>
+              <div class="field title-field">
+                <label for="titleInput">Terminal title</label>
+                <input id="titleInput" type="text" />
+              </div>
+              <div class="field welcome-field">
+                <label for="welcomeInput">Welcome lines</label>
+                <textarea id="welcomeInput"></textarea>
+              </div>
+            </section>
+
+            <section class="form-column command-editor" aria-label="Command editor">
+              <div class="section-label">
+                <span>02</span>
+                <strong>Command</strong>
+              </div>
+              <div class="two-col command-fields">
+                <div class="field">
+                  <label for="commandInput">Command</label>
+                  <input id="commandInput" type="text" placeholder="projects" />
+                </div>
+                <div class="field">
+                  <label for="descriptionInput">Help description</label>
+                  <input id="descriptionInput" type="text" placeholder="show the best work" />
+                </div>
+              </div>
+              <div class="field answer-field">
+                <label for="answerInput">Command answer</label>
+                <textarea id="answerInput" placeholder="The reply visitors see when they run the command."></textarea>
+              </div>
+            </section>
+
+            <section class="ship-row" aria-label="Embed controls">
+              <div class="field asset-field">
+                <label for="assetSourceInput">Asset source</label>
+                <select id="assetSourceInput">
+                  <option value="cdn" selected>CDN links</option>
+                  <option value="local">Local files</option>
+                </select>
+              </div>
+              <div class="button-row">
+                <button type="submit">Save command</button>
+                <button class="secondary" id="copyButton" type="button">Copy embed</button>
+                <button class="secondary" id="viewEmbedButton" type="button">View code</button>
+                <button class="secondary quiet" id="resetButton" type="button">Reset</button>
+              </div>
+            </section>
+            <p class="status" id="statusText" aria-live="polite"></p>
+          </form>
+
+          <section class="commands-field" aria-label="Saved commands">
+            <div class="command-list-heading">
+              <div>
+                <p class="small-title">Command deck</p>
+                <p class="panel-note">Run, edit, or remove saved commands from the live preview.</p>
+              </div>
+            </div>
+            <ul class="command-list" id="commandList"></ul>
+          </section>
+
+          <dialog class="embed-dialog" id="embedDialog" aria-labelledby="embedDialogTitle">
+            <div class="embed-dialog-card">
+              <div class="embed-dialog-header">
+                <h2 id="embedDialogTitle">Embed code</h2>
+                <div class="embed-dialog-actions">
+                  <button class="secondary dialog-copy" id="copyEmbedDialogButton" type="button" aria-live="polite">Copy code</button>
+                  <button class="secondary dialog-close" id="closeEmbedButton" type="button">Close</button>
+                </div>
+              </div>
+              <textarea class="embed-output" id="embedCode" readonly></textarea>
+            </div>
+          </dialog>
+        </aside>
+
+        <section class="studio-panel preview-panel" aria-label="Live preview">
+          <div class="preview-heading">
+            <div>
+              <p class="eyebrow">Live preview</p>
+              <h2>Your terminal as visitors see it.</h2>
+            </div>
+            <span class="preview-badge">Browser only</span>
+          </div>
+          <div id="site-terminal"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./terminal.js"></script>
+    <script src="./builder.js"></script>
+  </body>
+</html>

@@ -16,19 +16,83 @@
 
       body {
         margin: 0;
-        min-height: 100vh;
+        min-height: 100dvh;
         display: grid;
-        place-items: center;
+        align-items: center;
         padding: 24px;
+        background:
+          linear-gradient(180deg, rgba(130, 207, 255, 0.07), transparent 320px),
+          #101214;
       }
 
       main {
+        display: grid;
+        gap: 16px;
         width: min(720px, 100%);
+        margin: 0 auto;
+      }
+
+      header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: end;
+        gap: 8px;
+      }
+
+      h1,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 1;
+      }
+
+      p {
+        color: #aeb7b2;
+        line-height: 1.5;
+      }
+
+      a {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 6px;
+        padding: 8px 11px;
+        color: #8fe6bf;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 0 0 1px rgba(143, 230, 191, 0.28);
+      }
+
+      @media (max-width: 760px) {
+        body {
+          align-items: start;
+          padding-top: 64px;
+        }
       }
     </style>
   </head>
   <body>
     <main>
+      <header>
+        <div>
+          <h1>CDN example</h1>
+          <p>Loads the published widget from jsDelivr.</p>
+        </div>
+        <nav aria-label="Example links">
+          <a href="../index.html">Home</a>
+          <a href="../builder.html">Builder</a>
+        </nav>
+      </header>
       <div id="site-terminal"></div>
     </main>
 

@@ -56,7 +56,7 @@ function fakeNode() {
   return {
     attributes: {},
     children: [],
-    classList: { add() {} },
+    classList: { add() {}, remove() {} },
     dataset: {},
     focused: 0,
     listeners: {},
@@ -82,7 +82,7 @@ const previousDocument = global.document;
 try {
   global.document = { createElement: fakeNode };
   const host = fakeNode();
-  const terminal = mount(host);
+  const terminal = mount(host, { animate: false });
   assert.equal(terminal.input.attributes['aria-label'], 'Terminal command');
   assert.equal(typeof host.children[0].listeners.click, 'function');
   host.children[0].listeners.click();
@@ -128,13 +128,67 @@ try {
     preventDefault() {},
   });
   assert.equal(liveStatus.textContent, 'Terminal cleared.');
+  const runResult = terminal.run('help');
+  assert.equal(runResult.type, 'output');
+  assert.match(liveStatus.textContent, /Available commands/);
+  assert.equal(body.children[body.children.length - 2].textContent, '$ help');
   assert.doesNotThrow(() => mount(fakeNode(), { welcome: 'Ready.' }));
+
+  const pendingTimers = [];
+  const previousSetTimeout = global.setTimeout;
+  const previousClearTimeout = global.clearTimeout;
+  global.setTimeout = (callback) => {
+    pendingTimers.push(callback);
+    return callback;
+  };
+  global.clearTimeout = () => {};
+  try {
+    const animatedHost = fakeNode();
+    const animated = mount(animatedHost, {
+      welcome: [],
+      commands: { about: 'Animated reply.' },
+      commandTypeSpeed: 1,
+      outputTypeSpeed: 1,
+    });
+    const animatedBody = animatedHost.children[0].children[1];
+    const animatedStatus = animatedHost.children[0].children[3];
+    const animatedResult = animated.run('about');
+    assert.equal(animatedResult.type, 'output');
+    assert.equal(animated.input.value, '');
+    assert.equal(animatedBody.children.length, 0);
+    pendingTimers.shift()();
+    assert.equal(animated.input.value, 'a');
+    while (pendingTimers.length) pendingTimers.shift()();
+    assert.equal(animated.input.value, '');
+    assert.equal(animatedStatus.textContent, 'Animated reply.');
+    assert.equal(animatedBody.children.at(-2).textContent, '$ about');
+    assert.equal(animatedBody.children.at(-1).textContent, 'Animated reply.');
+
+    const manualHost = fakeNode();
+    const manual = mount(manualHost, {
+      welcome: [],
+      commands: { about: 'Typed reply.' },
+      outputTypeSpeed: 1,
+    });
+    const manualBody = manualHost.children[0].children[1];
+    manual.input.value = 'about';
+    manualHost.children[0].children[2].listeners.submit({ preventDefault() {} });
+    assert.equal(manual.input.value, '');
+    assert.equal(manualBody.children.at(-2).textContent, '$ about');
+    assert.equal(manualBody.children.at(-1).textContent, '');
+    while (pendingTimers.length) pendingTimers.shift()();
+    assert.equal(manualBody.children.at(-1).textContent, 'Typed reply.');
+  } finally {
+    global.setTimeout = previousSetTimeout;
+    global.clearTimeout = previousClearTimeout;
+  }
 } finally {
   global.document = previousDocument;
 }
 
 const css = fs.readFileSync('./terminal.css', 'utf8');
 assert.match(css, /\.website-terminal,\s*\.website-terminal \*\s*{[^}]*box-sizing:\s*border-box;/);
+assert.match(css, /\.website-terminal \.wt-input-row:focus-within\s*{/);
 
 const unscopedWidgetSelectors = css
   .split('{')

@@ -6,12 +6,12 @@
     <title>Website Terminal</title>
     <meta
       name="description"
-      content="Build a safe fake terminal for any website, add commands and answers, preview it, then copy the embed code."
+      content="Build a browser-only command terminal for your website, preview the replies, and copy one embed snippet."
     />
     <meta property="og:title" content="Website Terminal" />
     <meta
       property="og:description"
-      content="A dependency-free fake terminal widget and builder for normal websites."
+      content="A browser-only terminal builder for portfolios, product pages, docs, and launch pages."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mir4zzz.github.io/website-terminal/" />
@@ -20,500 +20,164 @@
     <meta name="twitter:title" content="Website Terminal" />
     <meta
       name="twitter:description"
-      content="Add a safe browser-only terminal to a normal website and copy the embed code."
+      content="Turn a normal page into a tiny command surface visitors remember."
     />
     <meta name="twitter:image" content="https://mir4zzz.github.io/website-terminal/assets/demo.png" />
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./terminal.css" />
-    <style>
-      :root {
-        color-scheme: dark;
-        --page: #111312;
-        --surface: rgba(24, 27, 29, 0.92);
-        --surface-soft: rgba(255, 255, 255, 0.045);
-        --line: rgba(255, 255, 255, 0.11);
-        --text: #f5f7fa;
-        --muted: #aeb7b2;
-        --accent: #8fe6bf;
-        --accent-strong: #d7ffe9;
-        --ink-on-accent: #07130d;
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: var(--page);
-        color: var(--text);
-      }
-
-      html {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        padding: 24px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 300px),
-          linear-gradient(135deg, rgba(143, 230, 191, 0.06), transparent 440px),
-          var(--page);
-      }
-
-      main {
-        width: min(1180px, 100%);
-        margin: 0 auto;
-        display: grid;
-        gap: 22px;
-      }
-
-      h1,
-      p,
-      h2 {
-        margin: 0;
-      }
-
-      h1 {
-        max-width: 820px;
-        font-size: clamp(2.1rem, 6vw, 4.7rem);
-        line-height: 0.98;
-        letter-spacing: 0;
-        text-wrap: balance;
-      }
-
-      p {
-        max-width: 680px;
-        color: var(--muted);
-        line-height: 1.65;
-        text-wrap: pretty;
-      }
-
-      h2 {
-        font-size: 1rem;
-        letter-spacing: 0;
-      }
-
-      .builder-grid {
-        display: grid;
-        grid-template-columns: minmax(340px, 0.88fr) minmax(380px, 1.12fr);
-        gap: 18px;
-        align-items: start;
-      }
-
-      .hero-row {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 18px;
-        align-items: end;
-        padding: 12px 0 0;
-      }
-
-      .hero-copy {
-        display: grid;
-        gap: 14px;
-      }
-
-      .hero-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .hero-meta span {
-        min-height: 32px;
-        display: inline-flex;
-        align-items: center;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: var(--surface-soft);
-        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
-        color: var(--accent-strong);
-        font-size: 0.78rem;
-        font-weight: 800;
-      }
-
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: flex-end;
-      }
-
-      .link-button {
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.14);
-        border-radius: 6px;
-        padding: 10px 12px;
-        color: var(--text);
-        font-size: 0.9rem;
-        font-weight: 800;
-        text-decoration: none;
-        transition-property: scale, box-shadow, background-color, color;
-        transition-duration: 150ms;
-        transition-timing-function: ease-out;
-      }
-
-      .link-button.primary {
-        background: var(--accent);
-        color: var(--ink-on-accent);
-        box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.18),
-          0 14px 34px rgba(143, 230, 191, 0.16);
-      }
-
-      .link-button:hover,
-      .link-button:focus-visible {
-        box-shadow:
-          0 0 0 1px rgba(245, 247, 250, 0.22),
-          0 10px 26px rgba(0, 0, 0, 0.24);
-      }
-
-      .link-button:active {
-        scale: 0.96;
-      }
-
-      .panel {
-        border: 0;
-        border-radius: 8px;
-        padding: 18px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 120px),
-          var(--surface);
-        box-shadow:
-          0 0 0 1px var(--line),
-          0 24px 70px rgba(0, 0, 0, 0.32);
-        backdrop-filter: blur(14px);
-      }
-
-      .builder-panel {
-        display: grid;
-        gap: 16px;
-      }
-
-      .preview-panel {
-        position: sticky;
-        top: 24px;
-      }
-
-      .preview-panel .website-terminal .wt-window {
-        min-height: 500px;
-      }
-
-      .preview-panel .website-terminal .wt-body {
-        flex: 1;
-        max-height: none;
-      }
-
-      .panel-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 14px;
-      }
-
-      .panel-kicker {
-        color: var(--accent);
-        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-      }
-
-      .builder-form,
-      .field,
-      .command-list {
-        display: grid;
-        gap: 12px;
-      }
-
-      .field {
-        gap: 6px;
-      }
-
-      .two-col {
-        display: grid;
-        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-        gap: 12px;
-      }
-
-      label,
-      .small-title {
-        color: var(--text);
-        font-size: 0.82rem;
-        font-weight: 700;
-      }
-
-      input,
-      textarea,
-      select {
-        width: 100%;
-        min-height: 44px;
-        border: 0;
-        border-radius: 6px;
-        padding: 10px 12px;
-        background: rgba(4, 8, 14, 0.68);
-        color: var(--text);
-        font: inherit;
-        outline: 0;
-        box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.14);
-        transition-property: box-shadow, background-color;
-        transition-duration: 150ms;
-        transition-timing-function: ease-out;
-      }
-
-      input:focus-visible,
-      textarea:focus-visible,
-      select:focus-visible {
-        background: rgba(4, 8, 14, 0.86);
-        box-shadow:
-          0 0 0 1px rgba(143, 230, 191, 0.64),
-          0 0 0 4px rgba(143, 230, 191, 0.14);
-      }
-
-      textarea {
-        min-height: 88px;
-        resize: vertical;
-        line-height: 1.5;
-      }
-
-      .button-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      button {
-        min-height: 44px;
-        border: 0;
-        border-radius: 6px;
-        padding: 10px 13px;
-        background: var(--accent);
-        color: var(--ink-on-accent);
-        cursor: pointer;
-        font: inherit;
-        font-weight: 800;
-        box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.16),
-          0 10px 24px rgba(143, 230, 191, 0.14);
-        transition-property: scale, box-shadow, background-color, color;
-        transition-duration: 150ms;
-        transition-timing-function: ease-out;
-      }
-
-      button.secondary {
-        background: transparent;
-        color: var(--text);
-        box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.14);
-      }
-
-      button:hover,
-      button:focus-visible {
-        box-shadow:
-          0 0 0 1px rgba(245, 247, 250, 0.24),
-          0 10px 26px rgba(0, 0, 0, 0.24);
-      }
-
-      button:active {
-        scale: 0.96;
-      }
-
-      .command-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .command-item {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 10px;
-        align-items: center;
-        border: 0;
-        border-radius: 6px;
-        padding: 10px;
-        background: rgba(4, 8, 14, 0.48);
-        box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.12);
-        transition-property: box-shadow, background-color;
-        transition-duration: 150ms;
-        transition-timing-function: ease-out;
-      }
-
-      .command-item:hover {
-        background: rgba(4, 8, 14, 0.64);
-        box-shadow: 0 0 0 1px rgba(143, 230, 191, 0.28);
-      }
-
-      .command-name {
-        color: var(--accent);
-        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
-        font-weight: 800;
-      }
-
-      .command-description,
-      .status {
-        color: var(--muted);
-        font-size: 0.88rem;
-      }
-
-      .status {
-        min-height: 1.45em;
-      }
-
-      .remove-button {
-        min-height: 40px;
-        padding: 8px 10px;
-      }
-
-      .embed-output {
-        min-height: 210px;
-        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
-        font-size: 0.82rem;
-      }
-
-      code {
-        display: block;
-        margin-top: 12px;
-        color: var(--accent);
-        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
-        font-size: 0.84rem;
-        line-height: 1.7;
-        white-space: pre-wrap;
-      }
-
-      @media (max-width: 760px) {
-        body {
-          padding: 16px;
-        }
-
-        .hero-row {
-          grid-template-columns: 1fr;
-          padding-top: 8px;
-        }
-
-        .hero-actions {
-          justify-content: flex-start;
-        }
-
-        .builder-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .preview-panel {
-          position: static;
-        }
-
-        .preview-panel .website-terminal .wt-window {
-          min-height: 380px;
-        }
-
-        .two-col {
-          grid-template-columns: 1fr;
-        }
-
-        .panel {
-          padding: 14px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./site.css" />
   </head>
-  <body>
-    <main>
-      <div class="hero-row">
+  <body class="home-page">
+    <main class="site-shell">
+      <header class="topbar" aria-label="Website Terminal">
+        <a class="brand-mark" href="./index.html" aria-label="Website Terminal home">
+          <span class="brand-glyph" aria-hidden="true">&gt;_</span>
+          <span>Website Terminal</span>
+        </a>
+        <nav class="topnav" aria-label="Primary navigation">
+          <a href="./index.html" aria-current="page">Preview</a>
+          <a class="nav-cta" href="./builder.html">Build</a>
+          <a href="https://github.com/MIR4ZZZ/website-terminal">GitHub</a>
+        </nav>
+      </header>
+
+      <section class="launch-hero" aria-label="Website Terminal preview">
         <div class="hero-copy">
-          <h1>Website Terminal</h1>
-          <p>Build a browser-only terminal, add commands and answers, preview it, then copy the embed code.</p>
-          <div class="hero-meta" aria-label="Project highlights">
-            <span>MIT licensed</span>
-            <span>No dependencies</span>
-            <span>Copy-paste embed</span>
+          <p class="eyebrow">Browser-only command surface</p>
+          <h1>Make your website feel like a secret control room.</h1>
+          <p class="hero-lede">
+            Drop in a tiny terminal where visitors can run commands for projects, demos, docs,
+            support, contact links, or anything your page should answer instantly.
+          </p>
+
+          <div class="hero-actions">
+            <a class="action primary" href="./builder.html">Build the terminal</a>
+            <a class="action secondary" href="https://github.com/new?template_name=website-terminal&template_owner=MIR4ZZZ">
+              Use the template
+            </a>
+          </div>
+
+          <div class="signal-strip" aria-label="Project highlights">
+            <span>No backend</span>
+            <span>Safe replies only</span>
+            <span>One embed</span>
           </div>
         </div>
-        <nav class="hero-actions" aria-label="Project links">
-          <a class="link-button primary" href="https://github.com/new?template_name=website-terminal&template_owner=MIR4ZZZ">Use template</a>
-          <a class="link-button" href="https://github.com/MIR4ZZZ/website-terminal">Star on GitHub</a>
-          <a class="link-button" href="./examples/cdn.html">CDN example</a>
-          <a class="link-button" href="./examples/minimal.html">Minimal example</a>
-        </nav>
-      </div>
 
-      <section class="builder-grid" aria-label="Terminal builder">
-        <aside class="panel builder-panel">
-          <div class="panel-header">
-            <h2>Command builder</h2>
-            <p class="panel-kicker">copy embed</p>
+        <div class="hero-stage" aria-label="Interactive product demo">
+          <div class="stage-ribbon" aria-hidden="true">
+            <span>Live on page</span>
+            <span>Runs in browser</span>
           </div>
-
-          <form class="builder-form" id="builderForm">
-            <div class="field">
-              <label for="titleInput">Terminal title</label>
-              <input id="titleInput" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="welcomeInput">Welcome lines</label>
-              <textarea id="welcomeInput"></textarea>
-            </div>
-
-            <div class="two-col">
-              <div class="field">
-                <label for="commandInput">Command</label>
-                <input id="commandInput" type="text" placeholder="about" />
-              </div>
-
-              <div class="field">
-                <label for="descriptionInput">Help description</label>
-                <input id="descriptionInput" type="text" placeholder="short help text" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="answerInput">Command answer</label>
-              <textarea id="answerInput" placeholder="The text visitors see when they run the command."></textarea>
-            </div>
-
-            <div class="field">
-              <label for="assetSourceInput">Asset source</label>
-              <select id="assetSourceInput">
-                <option value="cdn" selected>CDN links - paste anywhere</option>
-                <option value="local">Local files - copy terminal.css and terminal.js</option>
-              </select>
-            </div>
-
-            <div class="button-row">
-              <button type="submit">Save command</button>
-              <button class="secondary" id="resetButton" type="button">Reset</button>
-              <button class="secondary" id="copyButton" type="button">Copy embed</button>
-            </div>
-            <p class="status" id="statusText" aria-live="polite"></p>
-          </form>
-
-          <div class="field">
-            <p class="small-title">Commands</p>
-            <ul class="command-list" id="commandList"></ul>
+          <div id="home-terminal" class="home-terminal" aria-label="Interactive terminal example"></div>
+          <div class="command-pad" aria-label="Try terminal commands">
+            <button type="button" data-demo-command="projects" aria-pressed="false">projects</button>
+            <button type="button" data-demo-command="demo" aria-pressed="false">demo</button>
+            <button type="button" data-demo-command="contact" aria-pressed="false">contact</button>
           </div>
+        </div>
+      </section>
 
-          <div class="field">
-            <label for="embedCode">Embed code</label>
-            <textarea class="embed-output" id="embedCode" readonly></textarea>
-          </div>
-        </aside>
+      <section class="proof-section" aria-label="Why people add it">
+        <div class="proof-copy">
+          <p class="eyebrow">Why it works</p>
+          <h2>It turns passive scrolling into a small moment of play.</h2>
+        </div>
+        <div class="proof-grid">
+          <article>
+            <span class="proof-index">01</span>
+            <h3>Visitors choose their path</h3>
+            <p>They type or tap a command and get the exact answer they were looking for.</p>
+          </article>
+          <article>
+            <span class="proof-index">02</span>
+            <h3>Your page feels personal</h3>
+            <p>The commands can match your voice, product, work, audience, and next action.</p>
+          </article>
+          <article>
+            <span class="proof-index">03</span>
+            <h3>It ships without a stack</h3>
+            <p>Paste generated HTML into any normal page. No server, accounts, or database.</p>
+          </article>
+        </div>
+      </section>
 
-        <div class="panel preview-panel">
-          <div class="panel-header">
-            <h2>Live preview</h2>
-            <p class="panel-kicker">browser only</p>
+      <section class="builder-tease" aria-label="Builder preview">
+        <div class="tease-copy">
+          <p class="eyebrow">Command builder</p>
+          <h2>Write commands. Watch the preview. Copy the embed.</h2>
+          <a class="action primary" href="./builder.html">Open builder</a>
+        </div>
+        <div class="embed-demo" aria-label="Generated embed preview">
+          <div class="embed-demo-top">
+            <span>generated snippet</span>
+            <span>ready to paste</span>
           </div>
-          <div id="site-terminal"></div>
+          <div id="embed-terminal-demo" class="embed-terminal" aria-label="Generated command preview"></div>
+          <ol class="embed-flow">
+            <li>Write replies</li>
+            <li>Preview typing</li>
+            <li>Paste snippet</li>
+          </ol>
+          <pre class="embed-code"><code>&lt;div id="site-terminal"&gt;&lt;/div&gt;
+&lt;script&gt;WebsiteTerminal.mount('#site-terminal', config)&lt;/script&gt;</code></pre>
         </div>
       </section>
     </main>
 
     <script src="./terminal.js"></script>
-    <script src="./builder.js"></script>
+    <script>
+      const homeTerminal = WebsiteTerminal.mount("#home-terminal", {
+        title: "visitor@your-site: ~",
+        welcome: ["Access granted.", "Available: projects, demo, contact, builder"],
+        commands: {
+          projects: {
+            description: "show your best work",
+            text: "Project links, case studies, GitHub repos, demos, and resumes can live behind one memorable command.",
+          },
+          demo: {
+            description: "explain the product",
+            text: "Use commands for features, install steps, FAQs, docs, support, roadmap, or launch updates.",
+          },
+          contact: {
+            description: "send people somewhere useful",
+            text: "Point visitors to email, booking, Discord, newsletter, waitlist, or your main CTA.",
+          },
+          builder: {
+            description: "make your own",
+            text: "Open the builder, write your command replies, preview them, then copy the embed.",
+          },
+        },
+      });
+
+      const demoButtons = document.querySelectorAll("[data-demo-command]");
+      demoButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          demoButtons.forEach((item) => {
+            const isCurrent = item === button;
+            item.classList.toggle("is-active", isCurrent);
+            item.setAttribute("aria-pressed", String(isCurrent));
+          });
+          homeTerminal.run(button.dataset.demoCommand);
+          homeTerminal.input.focus();
+        });
+      });
+
+      const embedTerminal = WebsiteTerminal.mount("#embed-terminal-demo", {
+        title: "builder@local: ~",
+        welcome: [],
+        placeholder: 'Type "init" and press Enter...',
+        commandTypeSpeed: 18,
+        outputTypeSpeed: 8,
+        commands: {
+          "website-terminal": {
+            description: "generate embed",
+            text: "Created commands: projects, demo, contact\nEmbed copied to clipboard",
+          },
+        },
+      });
+
+      setTimeout(() => embedTerminal.run("website-terminal init"), 700);
+    </script>
   </body>
 </html>

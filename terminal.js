@@ -6,9 +6,12 @@
   const defaults = {
     title: 'guest@website: ~',
     prompt: '$',
-    placeholder: 'Type "help" and press Enter...',
+    placeholder: '',
     welcome: ['Website terminal loaded.', 'Type "help" for commands.'],
     commands: {},
+    animate: true,
+    commandTypeSpeed: 22,
+    outputTypeSpeed: 10,
   };
 
   function commandNames(commands) {
@@ -91,11 +94,15 @@
     return node;
   }
 
-  function render(body, history) {
+  function render(body, history, revealIndex, revealText) {
     body.replaceChildren();
-    history.forEach((item) => {
+    history.forEach((item, index) => {
       const row = el('div', 'wt-output', item.text);
       row.dataset.type = item.type;
+      if (index === revealIndex) {
+        row.classList.add('wt-output-typing');
+        revealText(row, item.text);
+      }
       body.append(row);
     });
     body.scrollTop = body.scrollHeight;
@@ -109,6 +116,7 @@
     const welcome = Array.isArray(settings.welcome) ? settings.welcome : [settings.welcome];
     const history = welcome.filter((text) => text != null).map((text) => ({ type: 'system', text: String(text) }));
     const commandHistory = createCommandHistory();
+    let timers = [];
     host.classList.add('website-terminal');
     host.replaceChildren();
 
@@ -138,6 +146,7 @@
       if (event.ctrlKey && event.key.toLowerCase() === 'l') {
         event.preventDefault();
         history.length = 0;
+        stopAnimations();
         render(body, history);
         return;
       }
@@ -152,27 +161,94 @@
       input.setSelectionRange(input.value.length, input.value.length);
     });
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const rawCommand = input.value.trim();
-      const result = runCommand(rawCommand, settings.commands);
-      if (result.type === 'empty') return;
-      commandHistory.push(rawCommand);
+    function stopAnimations() {
+      timers.forEach((timer) => clearTimeout(timer));
+      timers = [];
+    }
+
+    function schedule(callback, delay) {
+      const timer = setTimeout(() => {
+        timers = timers.filter((item) => item !== timer);
+        callback();
+      }, delay);
+      timers.push(timer);
+    }
+
+    function revealText(row, text) {
+      if (!settings.animate) return;
+      if (!text.length) {
+        row.classList.remove('wt-output-typing');
+        return;
+      }
+      row.textContent = '';
+      Array.from(text).forEach((character, index) => {
+        schedule(() => {
+          row.textContent += character;
+          body.scrollTop = body.scrollHeight;
+          if (index === text.length - 1) row.classList.remove('wt-output-typing');
+        }, index * settings.outputTypeSpeed);
+      });
+    }
+
+    function commitCommand(rawCommand, result, animateOutput = settings.animate) {
+      if (result.type === 'empty') return result;
+      const value = String(rawCommand ?? '').trim();
+      commandHistory.push(value);
       if (result.type === 'clear') {
         history.length = 0;
         liveStatus.textContent = 'Terminal cleared.';
+        render(body, history);
       } else {
-        history.push({ type: 'input', text: `${settings.prompt} ${rawCommand}` }, result);
+        history.push({ type: 'input', text: `${settings.prompt} ${value}` }, result);
         liveStatus.textContent = result.text;
+        render(body, history, animateOutput ? history.length - 1 : undefined, revealText);
       }
+      return result;
+    }
+
+    function submitCommand(rawCommand, animateOutput = settings.animate) {
+      return commitCommand(rawCommand, runCommand(rawCommand, settings.commands), animateOutput);
+    }
+
+    function typeCommand(rawCommand, done) {
+      const value = String(rawCommand ?? '').trim();
       input.value = '';
-      render(body, history);
+      Array.from(value).forEach((character, index) => {
+        schedule(() => {
+          input.value += character;
+          input.setSelectionRange?.(input.value.length, input.value.length);
+        }, index * settings.commandTypeSpeed);
+      });
+      schedule(() => {
+        input.value = '';
+        done();
+      }, value.length * settings.commandTypeSpeed + 80);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      stopAnimations();
+      const result = submitCommand(input.value);
+      if (result.type !== 'empty') input.value = '';
     });
 
     windowNode.append(header, body, form, liveStatus);
     host.append(windowNode);
     render(body, history);
-    return { input, run: (command) => runCommand(command, settings.commands) };
+    return {
+      input,
+      run(command) {
+        stopAnimations();
+        render(body, history);
+        const result = runCommand(command, settings.commands);
+        if (result.type !== 'empty') {
+          if (settings.animate) typeCommand(command, () => commitCommand(command, result));
+          else commitCommand(command, result, false);
+          input.value = '';
+        }
+        return result;
+      },
+    };
   }
 
   return { createCommandHistory, mount, runCommand };
